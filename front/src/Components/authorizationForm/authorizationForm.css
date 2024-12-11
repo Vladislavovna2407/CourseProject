@@ -1,0 +1,14 @@
+a {
+    text-transform: capitalize;
+} 
+
+ span {
+    text-transform: uppercase;
+}
+
+.validation {
+    color: red;
+    /* margin-left: 12px; */
+    size: 5px;
+    margin-top: 0px !important;
+}

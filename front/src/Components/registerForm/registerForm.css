@@ -1,0 +1,21 @@
+.size {
+    max-width: 400px !important;
+    margin-bottom: 10px !important;
+}
+
+.custom-form {
+    margin:  150px auto !important;
+    max-width: 420px !important; 
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    font-size: large !important;
+}
+
+span {
+   text-transform: uppercase;
+}

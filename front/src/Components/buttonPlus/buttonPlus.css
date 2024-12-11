@@ -1,0 +1,19 @@
+.icons {
+  font-size: 35px !important;
+  color: #6c757d;
+}
+
+.span {
+    margin-left: 35px; 
+    font-style: italic; 
+    font-size: 10px !important;
+    vertical-align: middle;
+    position: 'absolute';
+    top: '100%';
+    left: '50%';
+           
+}
+
+.location {
+    position: relative;
+}
