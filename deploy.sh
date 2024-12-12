@@ -17,9 +17,8 @@ echo "Run new PM2 action"
 pm2 start --name course-back npm -- start
 echo "Backend is ready"
 
-cd cd /home/ec2-user/dev/CourseProject/front
+cd /home/ec2-user/dev/CourseProject/front
 echo "Preparing frontend to start"
-cd back
 echo "Install app dependencies"
 rm -rf node_modules package-lock.json
 npm install
