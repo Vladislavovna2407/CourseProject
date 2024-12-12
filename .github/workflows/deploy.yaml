@@ -14,7 +14,9 @@ jobs:
       - name: print variables
         env: 
           SECR: ${{ secrets.AWS_HOST }}
-        run: echo "$SECR"
+        run: |
+          echo hello
+          echo $SECR
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
