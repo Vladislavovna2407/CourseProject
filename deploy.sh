@@ -13,7 +13,7 @@ git pull
 echo "Preparing backend to start"
 cd /home/ec2-user/dev/CourseProject/back
 echo "Install app dependencies"
-rm -rf node_modules package-lock.json
+#rm -rf node_modules package-lock.json
 npm install
 
 echo "Run new PM2 action"
@@ -23,7 +23,7 @@ echo "Backend is ready"
 cd /home/ec2-user/dev/CourseProject/front
 echo "Preparing frontend to start"
 echo "Install app dependencies"
-rm -rf node_modules package-lock.json
+#rm -rf node_modules package-lock.json
 npm install
 
 echo "Run new PM2 action"
