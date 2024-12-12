@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: print variables
-        run: echo ${{ secrets.AWS_HOST }}
+        run: echo '${{ secrets.AWS_HOST }}'
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
