@@ -4,6 +4,9 @@ pm2 kill
 echo "Jump to app folder"
 cd /home/ec2-user/dev/CourseProject
 
+echo "Revert all local changes"
+git restore .
+
 echo "Update app from Git"
 git pull
 
