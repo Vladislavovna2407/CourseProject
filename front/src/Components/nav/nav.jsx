@@ -2,10 +2,10 @@ import { Fragment, useState } from 'react'
 import './nav.css'
 
 export default  function  Nav({buttonTexts}) {
-    const [activeButton, setActiveButton] = useState(null);
-    const handleActiveButton = (index) => {
-        setActiveButton(index)
-    }
+    // const [activeButton, setActiveButton] = useState(null);
+    // const handleActiveButton = (index) => {
+    //     setActiveButton(index)
+    // }
 
 
 
@@ -14,9 +14,9 @@ export default  function  Nav({buttonTexts}) {
     <Fragment>
             <div>
             <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
-            {buttonTexts.map((text, index) => (
+            {buttonTexts.map((button, index) => (
                     <li key={index} class="nav-item" role="presentation">
-                        <button class="btn-nav nav-link active" id="pills-home-tab" onClick={() => handleActiveButton(index)} data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{text}</button>
+                        <button class="btn-nav nav-link active" onClick={button.onClick} id="pills-home-tab"  data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{button.text}</button>
                     </li>
                 ))}
             </ul>

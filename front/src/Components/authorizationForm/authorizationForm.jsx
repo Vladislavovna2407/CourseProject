@@ -19,6 +19,10 @@ function signUp() {
   navigate('/register')
 }
 
+function goToAdmin(){
+  navigate('/admin')
+}
+
 
 
     return(
@@ -73,6 +77,7 @@ function signUp() {
               <button
                 type="submit"
                 className="btn btn-primary mb-3 w-100"
+                onClick={goToAdmin}
               >
                 Sign in
               </button>

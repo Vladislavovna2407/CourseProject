@@ -3,8 +3,6 @@ import './App.css';
 import RegisterForm from './Components/registerForm/registerForm';
 import AuthorizationForm from './Components/authorizationForm/authorizationForm';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import ConstructorForm from './Components/constructorForm/constructorForm';
-import Nav from './Components/nav/nav';
 import MainPage from './Components/mainPage/mainPage';
 import AdminPage from './Components/adminPage/adminPage';
 
@@ -12,10 +10,10 @@ import AdminPage from './Components/adminPage/adminPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    // element: <ConstructorForm/>,
-    // element: <AuthorizationForm />,
-    // element: <Nav/>,
-    //  element: <MainPage/>,
+     element: <MainPage/>,
+  },
+  {
+    path: '/admin',
     element: <AdminPage/>,
   },
   {
@@ -23,8 +21,8 @@ const router = createBrowserRouter([
     element: <RegisterForm/>,
   },
   {
-    path: '/constructor',
-    element: <ConstructorForm/>,
+    path: '/login',
+    element: <AuthorizationForm/>,
   },
   
 ])

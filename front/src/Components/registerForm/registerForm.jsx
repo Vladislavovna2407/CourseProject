@@ -7,8 +7,8 @@ export  default function RegisterForm() {
 
     const navigate = useNavigate();
 
-    function goToConstructor() {
-        navigate('/constructor')
+    function goToMain() {
+        navigate('/')
     }
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -110,7 +110,7 @@ export  default function RegisterForm() {
               <button
                 type="submit"
                 className="btn btn-primary mb-3 w-100"
-                // onClick={goToConstructor}
+                // onClick={goToMain}
               >
                 Register
               </button>
