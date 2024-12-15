@@ -2,28 +2,25 @@ import "./config.js"
 import express from 'express'
 import cors from "cors";
 import bodyParser from 'body-parser';
-// import authRoutes from './routes/auth.js'
-// import userRoutes from './routes/user.js'
+import userRoutes from './routes/user.js'
+import authRoutes from './routes/auth.js'
 // import { basicAuth } from './utils/basicAuth.js'
 
-const port = 3001
 const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
 
-// app.use(authRoutes)
-// app.use('/users', basicAuth, userRoutes)
-
-app.get('/', (req, res) => {
-  res.json({message: 'project is development'})
-})
+app.use(authRoutes)
+app.use('/users', userRoutes) //basicAuth
 
 app.get((req, res) => {
     res.status(404).send('Page not found')
 })
 
 app.use((error, req, res, next) => {
+    console.log(error)
+
     res.status(error.statusCode || 500).json({
         status: error.statusCode,
         message: error.message,
@@ -31,6 +28,6 @@ app.use((error, req, res, next) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Example app listening on port ${process.env.SERVER_PORT}`)
 })
