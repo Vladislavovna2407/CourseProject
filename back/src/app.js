@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/user.js'
 import authRoutes from './routes/auth.js'
 import { basicAuth } from './utils/basicAuth.js'
+import { adminOnly } from "./utils/adminOnly.js";
 
 const app = express()
 
@@ -12,7 +13,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use(authRoutes)
-app.use('/users', basicAuth, userRoutes)
+app.use('/users', basicAuth, adminOnly, userRoutes)
 
 app.get((req, res) => {
     res.status(404).send('Page not found')

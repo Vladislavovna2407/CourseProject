@@ -23,9 +23,9 @@ export const createUser = async ({ email, name, password }) => executeSql(async 
 
 export const findUser = async ({ email, password }) => executeSql(async () => {
   const response = await sql`
-      SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
-      FROM public.app_user
-      WHERE email = ${email} AND password = ${password}`;
+    SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
+    FROM public.app_user
+    WHERE email = ${email} AND password = ${password}`;
 
   if (response.count == 0) return null;
 
@@ -35,17 +35,17 @@ export const findUser = async ({ email, password }) => executeSql(async () => {
 
 export const getAllUsers = async () => executeSql(async () => {
   const response = await sql`
-      SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
-      FROM public.app_user`;
+    SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
+    FROM public.app_user`;
 
   return response;
 });
 
 export const getUserById = async (id) => executeSql(async () => {
   const response = await sql`
-      SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
-      FROM public.app_user
-      WHERE app_user_id = ${id}`;
+    SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
+    FROM public.app_user
+    WHERE app_user_id = ${id}`;
 
   if (response.count == 0) return null;
 
@@ -54,7 +54,14 @@ export const getUserById = async (id) => executeSql(async () => {
 
 export const deleteUser = async (id) => executeSql(async () => {
   await sql`
-      DELETE 
-      FROM public.app_user
-      WHERE app_user_id = ${id}`;
+    DELETE 
+    FROM public.app_user
+    WHERE app_user_id = ${id}`;
+});
+
+export const changeUserState = async (id, isActive) => executeSql(async () => {
+  await sql`
+    UPDATE public.app_user
+    SET is_active = ${isActive}
+    WHERE app_user_id = ${id}`
 });
