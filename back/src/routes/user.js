@@ -1,9 +1,8 @@
 // All actions related with users:
-// [POST] /users/{id}/block (block user with id)
-// [POST] /users/{id}/unblock (unblock user with id)
+
 // [POST] /users/{id}/grant (grant admin access for user with {id})
 // [POST] /users/{id}/revoke (revoke admin access for user with {id})
-// [DELETE] /users/{id}
+
 
 import express from 'express'
 import { param, validationResult } from 'express-validator'
@@ -23,6 +22,7 @@ router.get(
   })
 )
 
+// [DELETE] /users/{id}
 router.delete(
   '/:id',
   [
@@ -34,23 +34,25 @@ router.delete(
       throw new HttpError(400, "The input is not valid", validationErrors.array())
     }
 
-    const userId = req.params.id;
-    console.log(userId);
+    const targetUserId = req.params.id
+    const currentUser = req.user
 
-    // TODO: Must be current user.
-    const user = await getUserById(userId);
+    if (!currentUser.isAdmin) {
+      throw new HttpError(403, "The user is not admin to perform this action")
+    }
+
+    const user = await getUserById(targetUserId);
     if (!user) {
       throw new HttpError(404, "The user not found")
     }
 
-    if (!user.isAdmin) {
-      throw new HttpError(403, "The user is not admin to perform this action")
-    }
+    await deleteUser(targetUserId)
 
-    await deleteUser()
-
-    return res.status(204)
+    return res.status(204).end();
   })
 )
+
+// [POST] /users/{id}/block (block user with id)
+// [POST] /users/{id}/unblock (unblock user with id)
 
 export default router

@@ -54,6 +54,7 @@ export const getUserById = async (id) => executeSql(async () => {
 
 export const deleteUser = async (id) => executeSql(async () => {
   await sql`
-      DELETE public.app_user
+      DELETE 
+      FROM public.app_user
       WHERE app_user_id = ${id}`;
 });
