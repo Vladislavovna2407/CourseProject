@@ -1,13 +1,8 @@
-// All actions related with users:
-
-// [POST] /users/{id}/grant (grant admin access for user with {id})
-// [POST] /users/{id}/revoke (revoke admin access for user with {id})
-
 import express from 'express'
 import { param, validationResult } from 'express-validator'
 import HttpError from '../utils/httpError.js';
 import asyncUtil from '../utils/asyncUtil.js';
-import { getAllUsers, getUserById, deleteUser, changeUserState } from '../services/userService.js'
+import { getAllUsers, getUserById, deleteUser, changeUserState, changeUserRole } from '../services/userService.js'
 
 function ensureIdInRequest(req) {
   const validationErrors = validationResult(req);
@@ -78,6 +73,38 @@ router.post(
 
     await ensureUserExists(req.params.id)
     await changeUserState(req.params.id, true)
+
+    return res.status(204).end();
+  })
+)
+
+// [POST] /users/{id}/grant (grant admin access for user with {id})
+router.post(
+  '/:id/grant',
+  [
+    param('id').notEmpty().isInt()
+  ],
+  asyncUtil(async function (req, res) {
+    ensureIdInRequest(req);
+
+    await ensureUserExists(req.params.id)
+    await changeUserRole(req.params.id, true)
+
+    return res.status(204).end();
+  })
+)
+
+// [POST] /users/{id}/revoke (revoke admin access for user with {id})
+router.post(
+  '/:id/revoke',
+  [
+    param('id').notEmpty().isInt()
+  ],
+  asyncUtil(async function (req, res) {
+    ensureIdInRequest(req);
+
+    await ensureUserExists(req.params.id)
+    await changeUserRole(req.params.id, false)
 
     return res.status(204).end();
   })

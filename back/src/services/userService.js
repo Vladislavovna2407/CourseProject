@@ -65,3 +65,10 @@ export const changeUserState = async (id, isActive) => executeSql(async () => {
     SET is_active = ${isActive}
     WHERE app_user_id = ${id}`
 });
+
+export const changeUserRole = async (id, isAdmin) => executeSql(async () => {
+  await sql`
+    UPDATE public.app_user
+    SET is_admin = ${isAdmin}
+    WHERE app_user_id = ${id}`
+});
