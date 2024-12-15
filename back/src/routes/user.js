@@ -2,7 +2,7 @@ import express from 'express'
 import { param, validationResult } from 'express-validator'
 import HttpError from '../utils/httpError.js';
 import asyncUtil from '../utils/asyncUtil.js';
-import { getAllUsers, getUserById, deleteUser, changeUserState, changeUserRole } from '../services/userService.js'
+import UserService from '../services/userService.js';
 
 function ensureIdInRequest(req) {
   const validationErrors = validationResult(req);
@@ -12,7 +12,7 @@ function ensureIdInRequest(req) {
 }
 
 async function ensureUserExists(targetUserId) {
-  const user = await getUserById(targetUserId);
+  const user = await UserService.getUserById(targetUserId);
   if (!user) {
     throw new HttpError(404, "The user not found")
   }
@@ -25,7 +25,7 @@ const router = express.Router();
 router.get(
   '/',
   asyncUtil(async function (req, res) {
-    const users = await getAllUsers();
+    const users = await UserService.getAllUsers();
     res.json(users)
   })
 )
@@ -40,7 +40,7 @@ router.delete(
     ensureIdInRequest(req);
 
     await ensureUserExists(req.params.id)
-    await deleteUser(req.params.id)
+    await UserService.deleteUser(req.params.id)
 
     return res.status(204).end();
   })
@@ -56,7 +56,7 @@ router.post(
     ensureIdInRequest(req);
 
     await ensureUserExists(req.params.id)
-    await changeUserState(req.params.id, false)
+    await UserService.changeUserState(req.params.id, false)
 
     return res.status(204).end();
   })
@@ -72,7 +72,7 @@ router.post(
     ensureIdInRequest(req);
 
     await ensureUserExists(req.params.id)
-    await changeUserState(req.params.id, true)
+    await UserService.changeUserState(req.params.id, true)
 
     return res.status(204).end();
   })
@@ -88,7 +88,7 @@ router.post(
     ensureIdInRequest(req);
 
     await ensureUserExists(req.params.id)
-    await changeUserRole(req.params.id, true)
+    await UserService.changeUserRole(req.params.id, true)
 
     return res.status(204).end();
   })
@@ -104,7 +104,7 @@ router.post(
     ensureIdInRequest(req);
 
     await ensureUserExists(req.params.id)
-    await changeUserRole(req.params.id, false)
+    await UserService.changeUserRole(req.params.id, false)
 
     return res.status(204).end();
   })

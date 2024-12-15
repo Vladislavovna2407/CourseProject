@@ -1,4 +1,4 @@
-import { findUser } from '../services/userService.js'
+import UserService from '../services/userService.js';
 
 export async function basicAuth(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -21,7 +21,7 @@ export async function basicAuth(req, res, next) {
     return res.status(400).json({ message: 'Email and password must be provided' })
   }
 
-  const user = await findUser({ email, password });
+  const user = await UserService.findUser({ email, password });
   if (!user) {
     return res.status(400).json({ message: "The user not found" })
   }
