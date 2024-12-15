@@ -7,4 +7,4 @@ CREATE TABLE app_user (
     is_admin BOOLEAN NOT NULL
 );
 
-CREATE INDEX email_lower_idx ON app_user (LOWER(email));
+CREATE UNIQUE INDEX email_lower_idx ON app_user (LOWER(email));
