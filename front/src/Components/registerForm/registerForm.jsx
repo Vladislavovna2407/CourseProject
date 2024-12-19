@@ -1,24 +1,77 @@
 import './registerForm.css'
-import React from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export  default function RegisterForm() {
 
+  let url = "http://localhost:3001";
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+function handleName(event) {
+  setName(event.target.value)
+}
+
+function handleEmail(event) {
+  setEmail(event.target.value)
+}
+
+function handlePassword(event) {
+  setPassword(event.target.value)
+}
+
+function handleConfirmPassword(event) {
+  setConfirmPassword(event.target.value)
+}
+
     const navigate = useNavigate();
 
-    function goToMain() {
-        navigate('/')
-    }
+    // function goToMain() {
+    //     navigate('/')
+    // }
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
       console.log(data);
+     signUpHandler();
   };
 
-  const password = watch('password');
+  // const password = watch('password');
     
+  async function signUpHandler () {
+    const request = {
+      name: name,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword
+    }
+
+    const response = await fetch (url + '/register', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request)
+    })
+
+    if(response.ok) {
+      const encrypted = btoa(request.email + ':' + request.password);
+      localStorage.setItem('user', `Basic ${encrypted}`);
+      navigate('/admin')
+    } else {
+      const json = await response.json();
+      console.log(json.message)
+    }
+
+    }
+
+
+  
 
 
     return (
@@ -38,7 +91,7 @@ export  default function RegisterForm() {
                 id="staticName"
                 placeholder="Name"
                 // value={name}
-                // onChange={handleName}
+                onChange={handleName}
               />
               <label htmlFor="staticName" className="visually-hidden">
                 Name
@@ -61,7 +114,7 @@ export  default function RegisterForm() {
                 id="inputEmail"
                 placeholder="E-mail"
                 // value={email}
-                // onChange={handleEmail}
+                onChange={handleEmail}
               />
                {errors?.email && <p className="validation">{errors.email.message}</p>}
              </div>
@@ -82,7 +135,7 @@ export  default function RegisterForm() {
                 id="inputPassword"
                 placeholder="Password"
                 // value={password}
-                // onChange={handlePassword}
+                onChange={handlePassword}
               />
                {errors?.password && <p className="validation">{errors.password.message}</p>}
             </div>
@@ -102,7 +155,7 @@ export  default function RegisterForm() {
                 id="inputConfirmPassword"
                 placeholder="Confirm password"
                 // value={confirmPassword}
-                // onChange={handleConfirmPassword}
+                onChange={handleConfirmPassword}
               />
                {errors.confirmPassword && <p className="validation">{errors.confirmPassword.message}</p>}
             </div>
@@ -128,4 +181,4 @@ export  default function RegisterForm() {
 </div>
 )
 
-}
+            }

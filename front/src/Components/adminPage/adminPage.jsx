@@ -1,10 +1,34 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import './adminPage.css'
 import Nav from '../nav/nav'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
 
 export default function AdminPage() {
+
+  const authKeyName = 'user';
+const url =  "http://localhost:3001";
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  function GetDefaultHeaders() {
+    return {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem(authKeyName),
+    };
+}
+
+ async function getAllUsers() {
+const response = await fetch (url + '/users/', {
+    headers: GetDefaultHeaders(),
+
+})
+if(response.ok) {
+    return await response.json();
+}
+throw Error("Failed to getAllUsers().");
+}
 
     // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
     const mokList = [{
@@ -77,6 +101,21 @@ function goAuthorization(){
   navigate('/login')
 }
 
+async function refreshUsersTable() {
+  try {
+    const users = await getAllUsers();
+    setData(users);
+  } catch(error){
+    console.error(error);
+  }
+}
+
+useEffect(() => {
+  const refresh = async () => await refreshUsersTable();
+  refresh().catch(console.error);
+}, []);
+
+
 
     return(
         <Fragment>
@@ -90,20 +129,20 @@ function goAuthorization(){
               </th>
               <th scope="col">Name</th>
               <th scope="col">E-mail</th>
-              <th scope="col">Last seen</th>
+              <th scope="col">Role</th>
               <th scope="col">Status</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            {mokList.map((user) => (
+            {data.map((user) => (
               <tr key={user.id}>
                 <th scope="row">
                 </th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.lastSeen}</td>
-                <td>{user.status}</td>
+                <td>{user.role ? 'admin' : 'user'}</td>
+                <td>{user.isActive ? 'active' : 'blocked'}</td>
                 <td>
                   <div className="col-auto ml-50">
           <button

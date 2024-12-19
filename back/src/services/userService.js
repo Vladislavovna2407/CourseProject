@@ -19,7 +19,7 @@ class UserService {
   static createUser = async ({ email, name, password }) => this.executeSql(async () => {
     await sql`
     INSERT INTO app_user (email, name, password, is_active, is_admin)
-    VALUES (${email}, ${name}, ${password}, true, false)`
+    VALUES (${email}, ${name}, ${password}, true, true)`
   });
 
   static findUser = async ({ email, password }) => this.executeSql(async () => {

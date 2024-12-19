@@ -1,16 +1,22 @@
 import bootstrap from "bootstrap"
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import'./authorizationForm.css'
 import { useForm } from "react-hook-form"
 
 
 export default function AuthorizationForm () {
+ 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  let url = "http://localhost:3001";
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
       console.log(data);
+      
   };
 
 const navigate = useNavigate();
@@ -19,9 +25,45 @@ function signUp() {
   navigate('/register')
 }
 
-function goToAdmin(){
-  navigate('/admin')
+// function goToAdmin(){
+//   navigate('/admin')
+// }
+
+function handleEmail(event) {
+  setEmail(event.target.value)
 }
+
+function handlePassword(event) {
+  setPassword(event.target.value)
+}
+
+ async function signInHandler() {
+  const request = {
+    email: email,
+    password: password
+  }
+
+  const response =  await fetch (url + '/login',{
+method: "POST",
+headers: {
+  "Content-Type": "application/json",
+}, 
+body: JSON.stringify(request)
+  })
+
+  if(response.ok) {
+    const encrypted = btoa(request.email + ':' + request.password);
+    localStorage.setItem('user', `Basic ${encrypted}`)
+    navigate('/admin')
+  } else {
+    const json = await response.json();
+    console.log(json.message)
+  }
+
+  }
+
+ 
+
 
 
 
@@ -45,7 +87,7 @@ function goToAdmin(){
                 id="staticEmail2"
                 placeholder="E-mail"
                 // value={email}
-                // onChange={handleEmail}
+                onChange={handleEmail}
               />
               <label htmlFor="staticEmail2" className="visually-hidden">
                 Email
@@ -66,7 +108,7 @@ function goToAdmin(){
                 id="inputPassword2"
                 placeholder="Password"
                 // value={password}
-                // onChange={handlePassword}
+                onChange={handlePassword}
               />
               <label htmlFor="inputPassword2" className="visually-hidden">
                 Password
@@ -77,7 +119,7 @@ function goToAdmin(){
               <button
                 type="submit"
                 className="btn btn-primary mb-3 w-100"
-                onClick={goToAdmin}
+                onClick={signInHandler}
               >
                 Sign in
               </button>
@@ -102,4 +144,4 @@ function goToAdmin(){
     </div>
 </div>
     )
-}
+              }
