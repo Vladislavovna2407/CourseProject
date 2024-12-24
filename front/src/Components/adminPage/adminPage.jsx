@@ -20,59 +20,87 @@ const url =  "http://localhost:3001";
 }
 
  async function getAllUsers() {
-const response = await fetch (url + '/users/', {
+  const response = await fetch (url + '/users/', {
     headers: GetDefaultHeaders(),
-
 })
-if(response.ok) {
+  if(response.ok) {
     return await response.json();
 }
-throw Error("Failed to getAllUsers().");
+  throw Error("Failed to getAllUsers().");
 }
 
+
+async function deleteUser(id) {
+  const response = await fetch (url + `/users/${id}` , {
+    headers: GetDefaultHeaders(),
+    method: 'DELETE',
+  }) 
+ await refreshUsersTable();
+}
+  
+
+async function blockUser(id) {
+  const response = await fetch(url + `/users/${id}/block`, {
+    headers: GetDefaultHeaders(),
+    method: 'POST',
+  })
+    return await refreshUsersTable();
+}
+
+
+async function  unblockUser(id) {
+  const response = await fetch( url + `/users/${id}/unblock`, {
+    headers: GetDefaultHeaders() ,
+    method: 'POST'
+  })
+   return  await refreshUsersTable();
+  }
+  
+
+
     // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
-    const mokList = [{
-        name: 'Ira',
-        email: 'ira@mail.com',
-        id: '1',
-        lastSeen: '11-12-2024',
-        status:' active'
-    },
-    {
-      name: 'Ira',
-      email: 'ira@mail.com',
-      id: '2',
-      lastSeen: '11-12-2024',
-      status:' active'
-  },
-  {
-      name: 'Ira',
-      email: 'ira@mail.com',
-      id: '3',
-      lastSeen: '11-12-2024',
-      status:' active'
-  },
-  {
-      name: 'Ira',
-      email: 'ira@mail.com',
-      id: '4',
-      lastSeen: '11-12-2024',
-      status:' active'
-  },
-  {
-      name: 'Ira',
-      email: 'ira@mail.com',
-      id: '5',
-      lastSeen: '11-12-2024',
-      status:' active'
-  },
-  {
-      name: 'Ira',
-      email: 'ira@mail.com',
-      id: '6',
-      lastSeen: '11-12-2024',
-      status:' active'
-  }]
+  //   const mokList = [{
+  //       name: 'Ira',
+  //       email: 'ira@mail.com',
+  //       id: '1',
+  //       lastSeen: '11-12-2024',
+  //       status:' active'
+  //   },
+  //   {
+  //     name: 'Ira',
+  //     email: 'ira@mail.com',
+  //     id: '2',
+  //     lastSeen: '11-12-2024',
+  //     status:' active'
+  // },
+  // {
+  //     name: 'Ira',
+  //     email: 'ira@mail.com',
+  //     id: '3',
+  //     lastSeen: '11-12-2024',
+  //     status:' active'
+  // },
+  // {
+  //     name: 'Ira',
+  //     email: 'ira@mail.com',
+  //     id: '4',
+  //     lastSeen: '11-12-2024',
+  //     status:' active'
+  // },
+  // {
+  //     name: 'Ira',
+  //     email: 'ira@mail.com',
+  //     id: '5',
+  //     lastSeen: '11-12-2024',
+  //     status:' active'
+  // },
+  // {
+  //     name: 'Ira',
+  //     email: 'ira@mail.com',
+  //     id: '6',
+  //     lastSeen: '11-12-2024',
+  //     status:' active'
+  // }]
   
 
   const navForAdminPage = [{
@@ -148,18 +176,21 @@ useEffect(() => {
           <button
             type="submit"
             className="btn btn-outline-primary mx-1"
+            onClick={()=> blockUser(user.id)}
           >
             <i className="bi bi-lock"></i>
           </button>
           <button
             type="submit"
             className="btn btn-outline-primary mx-1"
+            onClick={()=>unblockUser(user.id)}
           >
             <i className="bi bi-unlock"></i>
           </button>
           <button
             type="submit"
             className="btn btn-outline-danger mx-1"
+            onClick={() => deleteUser(user.id)}
           >
             <i className="bi bi-trash"></i>
           </button>
