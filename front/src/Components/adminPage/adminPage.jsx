@@ -10,7 +10,7 @@ export default function AdminPage() {
   const url = "http://localhost:3001";
 
   const [data, setData] = useState([]);
-  const [isBlocked, setIsBlocked] = useState(true)
+
 
 
   const navigate = useNavigate();
@@ -47,8 +47,6 @@ export default function AdminPage() {
       headers: GetDefaultHeaders(),
       method: 'POST',
     })
-
-    // setIsBlocked(false)
     return await refreshUsersTable();
 
   }
@@ -67,7 +65,15 @@ export default function AdminPage() {
       headers: GetDefaultHeaders(),
       method: 'POST'
     })
-    return await refreshUsersTable()
+    return await refreshUsersTable();
+  }
+
+  async function makeUser(id) {
+    const response = await fetch(url + `/users/${id}/revoke`, {
+      headers: GetDefaultHeaders(),
+      method: 'POST'
+    })
+    return await refreshUsersTable();
   }
 
   // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
@@ -170,12 +176,36 @@ export default function AdminPage() {
     return (
       <button
         type="submit"
-        className="btn btn-outline-primary mx-1"
+        className="btn btn-outline-dark mx-1"
         onClick={() => unblockUser(user.id)}>
         <i className="bi bi-unlock"></i>
       </button>
     );
   }
+
+  function renderRoleActions(user) {
+    if(user.isAdmin) {
+      return (
+      <button
+      type="submit"
+      className="btn btn-outline-danger mx-1"
+      onClick={() => makeUser(user.id)}>
+        <i className="bi bi-person-x"></i>
+      
+    </button>
+    );
+  } 
+
+  return(
+    <button
+    type="submit"
+    className="btn btn-outline-success mx-1"
+    onClick={() => makeAdmin(user.id)}>
+    <i className="bi bi-person-plus-fill"></i>
+  </button>
+  );
+  }
+
 
   return (
     <Fragment>
@@ -206,13 +236,14 @@ export default function AdminPage() {
                 <td>
                   <div className="col-auto ml-50">
                     {renderStatusActions(user)}
-                    <button
+                    {renderRoleActions(user)}
+                    {/* <button
                       type="submit"
                       className="btn btn-outline-success mx-1"
-                      onClick={() => makeAdmin(user.id)}
+                      onClick={() => makeUser(user.id)}
                     >
                       <i class="bi bi-person-plus-fill"></i>
-                    </button>
+                    </button> */}
 
                     <button
                       type="submit"
