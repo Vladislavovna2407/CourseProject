@@ -7,70 +7,70 @@ import { useEffect } from 'react'
 
 export default function AdminPage() {
   const authKeyName = 'user';
-  const url =  "http://localhost:3001";
+  const url = "http://localhost:3001";
 
   const [data, setData] = useState([]);
   const [isBlocked, setIsBlocked] = useState(true)
- 
+
 
   const navigate = useNavigate();
 
   function GetDefaultHeaders() {
     return {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem(authKeyName),
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem(authKeyName),
     };
-}
-
- async function getAllUsers() {
-  const response = await fetch (url + '/users/', {
-    headers: GetDefaultHeaders(),
-})
-  if(response.ok) {
-    return await response.json();
-}
-  throw Error("Failed to getAllUsers().");
-}
-
-
-async function deleteUser(id) {
-  const response = await fetch (url + `/users/${id}` , {
-    headers: GetDefaultHeaders(),
-    method: 'DELETE',
-  }) 
- await refreshUsersTable();
-}
-  
-
-async function blockUser(id) {
-  const response = await fetch(url + `/users/${id}/block`, {
-    headers: GetDefaultHeaders(),
-    method: 'POST',
-  })
-  
-  // setIsBlocked(false)
-    return  await refreshUsersTable();
-   
-}
-
-
-async function  unblockUser(id) {
-  const response = await fetch( url + `/users/${id}/unblock`, {
-    headers: GetDefaultHeaders() ,
-    method: 'POST'
-  })
-   return  await refreshUsersTable();
   }
-  
-async function makeAdmin(id) {
-  const response = await fetch( url + `/users/${id}/grant`, {
-    headers: GetDefaultHeaders() ,
-    method: 'POST'
-  })
-  return await refreshUsersTable()
-}
 
-    // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
+  async function getAllUsers() {
+    const response = await fetch(url + '/users/', {
+      headers: GetDefaultHeaders(),
+    })
+    if (response.ok) {
+      return await response.json();
+    }
+    throw Error("Failed to getAllUsers().");
+  }
+
+
+  async function deleteUser(id) {
+    const response = await fetch(url + `/users/${id}`, {
+      headers: GetDefaultHeaders(),
+      method: 'DELETE',
+    })
+    await refreshUsersTable();
+  }
+
+
+  async function blockUser(id) {
+    const response = await fetch(url + `/users/${id}/block`, {
+      headers: GetDefaultHeaders(),
+      method: 'POST',
+    })
+
+    // setIsBlocked(false)
+    return await refreshUsersTable();
+
+  }
+
+
+  async function unblockUser(id) {
+    const response = await fetch(url + `/users/${id}/unblock`, {
+      headers: GetDefaultHeaders(),
+      method: 'POST'
+    })
+    return await refreshUsersTable();
+  }
+
+  async function makeAdmin(id) {
+    const response = await fetch(url + `/users/${id}/grant`, {
+      headers: GetDefaultHeaders(),
+      method: 'POST'
+    })
+    return await refreshUsersTable()
+  }
+
+  // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
   //   const mokList = [{
   //       name: 'Ira',
   //       email: 'ira@mail.com',
@@ -113,54 +113,74 @@ async function makeAdmin(id) {
   //     lastSeen: '11-12-2024',
   //     status:' active'
   // }]
-  
+
 
   const navForAdminPage = [{
     text: 'Main',
     onClick: handleButtonMain
-},
-{
-  text: 'Constructor',
-  onClick: handleButtonConstructor
-},
-{
-  text: 'Log out',
-  onClick: goAuthorization
-},
-]
+  },
+  {
+    text: 'Constructor',
+    onClick: handleButtonConstructor
+  },
+  {
+    text: 'Log out',
+    onClick: goAuthorization
+  },
+  ]
 
-function handleButtonConstructor() {
-  navigate("/")
-}
-
-function handleButtonMain(){
-  navigate ('/')
-}
-
-function goAuthorization(){
-  navigate('/login')
-}
-
-async function refreshUsersTable() {
-  try {
-    const users = await getAllUsers();
-    setData(users);
-  } catch(error){
-    console.error(error);
+  function handleButtonConstructor() {
+    navigate("/")
   }
-}
 
-useEffect(() => {
-  const refresh = async () => await refreshUsersTable();
-  refresh().catch(console.error);
-}, []);
+  function handleButtonMain() {
+    navigate('/')
+  }
 
+  function goAuthorization() {
+    navigate('/login')
+  }
 
+  async function refreshUsersTable() {
+    try {
+      const users = await getAllUsers();
+      setData(users);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-    return(
-        <Fragment>
-            <Nav buttonTexts={navForAdminPage}/>
-            <div className="container position">
+  useEffect(() => {
+    const refresh = async () => await refreshUsersTable();
+    refresh().catch(console.error);
+  }, []);
+
+  function renderStatusActions(user) {
+    if (user.isActive) {
+      return (
+        <button
+          type="submit"
+          className="btn btn-outline-primary mx-1"
+          onClick={() => blockUser(user.id)}>
+          <i className="bi bi-lock"></i>
+        </button>
+      );
+    }
+
+    return (
+      <button
+        type="submit"
+        className="btn btn-outline-primary mx-1"
+        onClick={() => unblockUser(user.id)}>
+        <i className="bi bi-unlock"></i>
+      </button>
+    );
+  }
+
+  return (
+    <Fragment>
+      <Nav buttonTexts={navForAdminPage} />
+      <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
           <caption className="caption">Users List</caption>
           <thead className='thead-light' >
@@ -185,51 +205,31 @@ useEffect(() => {
                 <td>{user.isActive ? 'active' : 'blocked'}</td>
                 <td>
                   <div className="col-auto ml-50">
-              
-          <button
-            type="submit"
-            className="btn btn-outline-primary mx-1"
-            onClick={()=> blockUser(user.id)}
-          >
-            {user.isActive === true ? <i className="bi bi-lock"></i>  : <i className="bi bi-unlock"></i>}
-            {/* <i className="bi bi-lock"></i> */}
-          </button>
-          
+                    {renderStatusActions(user)}
+                    <button
+                      type="submit"
+                      className="btn btn-outline-success mx-1"
+                      onClick={() => makeAdmin(user.id)}
+                    >
+                      <i class="bi bi-person-plus-fill"></i>
+                    </button>
 
-
-
-          {/* <button
-            type="submit"
-            className="btn btn-outline-primary mx-1"
-            onClick={()=>unblockUser(user.id)}
-          >
-            <i className="bi bi-unlock"></i>
-          </button> */}
-
-          <button
-            type="submit"
-            className="btn btn-outline-success mx-1"
-            onClick={() => makeAdmin(user.id)}
-          >
-            <i class="bi bi-person-plus-fill"></i>
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-outline-danger mx-1"
-            onClick={() => deleteUser(user.id)}
-          >
-            <i className="bi bi-trash"></i>
-          </button>
-        </div>
-        </td>
+                    <button
+                      type="submit"
+                      className="btn btn-outline-danger mx-1"
+                      onClick={() => deleteUser(user.id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
                 {/* <td>{new Date(user.lastSeen).toLocaleString()}</td> */}
                 {/* <td>{user.state ? "active" : "blocked"}</td> */}
               </tr>
             ))}
           </tbody>
         </table>
-        </div>
-        </Fragment>
-    )
+      </div>
+    </Fragment>
+  )
 }

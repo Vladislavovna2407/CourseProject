@@ -37,7 +37,8 @@ class UserService {
   static getAllUsers = async () => this.executeSql(async () => {
     const response = await sql`
     SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"
-    FROM public.app_user`;
+    FROM public.app_user
+    ORDER BY app_user_id`;
 
     return response;
   });
