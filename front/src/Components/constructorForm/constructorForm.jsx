@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Nav from "../nav/nav";
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
-import './constructorForm.css'
+import './constructorForm.css';
 
 const creatorOptions = {
   showLogicTab: true,
@@ -14,6 +16,7 @@ const creatorOptions = {
 
 export default function ConstructorForm() {
   let [creator, setCreator] = useState();
+  const navigate = useNavigate();
 
   if (creator === undefined) {
 
@@ -36,8 +39,35 @@ export default function ConstructorForm() {
   }
   //creator.text = window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
 
+  const navForConstructorPage = [{
+    text: 'Main',
+    onClick: handleButtonMain
+  },
+  {
+    text: 'Users list',
+    onClick: handleButtonConstructor
+  },
+  {
+    text: 'Log out',
+    onClick: goAuthorization
+  },
+  ]
+
+  function handleButtonConstructor() {
+    navigate("/admin")
+  }
+
+  function handleButtonMain() {
+    navigate('/')
+  }
+
+  function goAuthorization() {
+    navigate('/login')
+  }
+
   return (
     <div className="App">
+      <Nav buttonTexts={navForConstructorPage} />
       <SurveyCreatorComponent creator={creator} />
     </div>
   )
