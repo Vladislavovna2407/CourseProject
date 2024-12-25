@@ -5,6 +5,7 @@ import AuthorizationForm from './Components/authorizationForm/authorizationForm'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainPage from './Components/mainPage/mainPage';
 import AdminPage from './Components/adminPage/adminPage';
+import ConstructorForm from './Components/constructorForm/constructorForm';
 
 
 const router = createBrowserRouter([
@@ -24,7 +25,10 @@ const router = createBrowserRouter([
     path: '/login',
     element: <AuthorizationForm/>,
   },
-  
+  {
+    path: '/constructor',
+    element: <ConstructorForm/>,
+  }
 ])
 
 
