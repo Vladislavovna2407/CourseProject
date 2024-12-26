@@ -28,7 +28,7 @@ router.get(
     param('id').notEmpty().isInt()
   ],
   asyncUtil(async function (req, res) {
-    ensureRequestIsValid(req);
+    ensureRequestIsValid(req)
 
     const template = await TemplateService.getTemplate(req.params.id);
     if (!template) {
@@ -36,6 +36,29 @@ router.get(
     }
 
     return res.json(template.raw);
+  })
+)
+
+router.delete(
+  '/:id',
+  basicAuth,
+  [
+    param('id').notEmpty().isInt()
+  ],
+  asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req);
+
+    const template = await TemplateService.getTemplate(req.params.id);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    if (user.isAdmin || template.authorId == user.id) {
+      await TemplateService.deleteTemplate(template.id)
+      return res.status(204).end();
+    }
+
+    throw new HttpError(403, "The user is not authorized to perform this opeartion")
   })
 )
 
@@ -51,12 +74,23 @@ router.post(
     ensureRequestIsValid(req)
 
     const data = matchedData(req)
-    data.raw = req.body //JSON.stringify(req.body)
+    data.raw = req.body
     data.authorId = req.user.id
 
     console.log(data)
 
     await TemplateService.createTemplate(data);
+
+    res.status(204).end()
+  })
+)
+
+router.post(
+  '/:id/answers',
+  basicAuth,
+  asyncUtil(async function (req, res) {
+
+    console.log(req.body)
 
     res.status(204).end()
   })

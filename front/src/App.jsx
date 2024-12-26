@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainPage from './Components/mainPage/mainPage';
 import AdminPage from './Components/adminPage/adminPage';
 import ConstructorForm from './Components/constructorForm/constructorForm';
+import ResponsePage from './Components/responsePage/responsePage';
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/constructor/:id',
     element: <ConstructorForm />,
+  },
+  {
+    path: '/forms/:id',
+    element: <ResponsePage />,
   }
 ])
 

@@ -13,7 +13,7 @@ export async function createTemplate(payload) {
   const response = await fetch(API_URL + '/templates', {
     method: "POST",
     headers: GetDefaultHeaders(),
-    body: payload
+    body: JSON.stringify(payload)
   })
 
   if (response.ok) {
@@ -34,4 +34,18 @@ export async function getTemplate(id) {
   }
 
   throw Error("Failed to getTemplate().");
+}
+
+export async function saveResponse(templateId, model){
+  const response =  await fetch(API_URL + '/templates/' + templateId + '/answers', {
+    method: "POST",
+    headers: GetDefaultHeaders(),
+    body: JSON.stringify(model)
+  })
+
+  if (response.ok) {
+    return;
+  }
+
+  throw Error("Failed to saveResponse().");
 }
