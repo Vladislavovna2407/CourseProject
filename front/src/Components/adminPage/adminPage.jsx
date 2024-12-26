@@ -136,7 +136,7 @@ export default function AdminPage() {
   ]
 
   function handleButtonConstructor() {
-    navigate("/")
+    navigate("/constructor")
   }
 
   function handleButtonMain() {

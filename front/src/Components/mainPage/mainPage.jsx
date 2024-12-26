@@ -1,9 +1,14 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Nav from '../nav/nav'
 import './mainPage.css'
 
 export default function MainPage() {
+
+  let [data, setData] = useState([]);
+  let url = 'http://localhost:3001';
+  const authKeyName = 'user';
+
   const navigate = useNavigate();
 
   function goLogin() {
@@ -17,6 +22,38 @@ export default function MainPage() {
   function handleButtonConstructor() {
     navigate('/constructor')
   }
+
+  function GetDefaultHeaders() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem(authKeyName),
+    };
+  }
+
+  async function getAllTemplates() {
+    const response = await fetch(url + '/templates', {
+      headers: GetDefaultHeaders(),
+    })
+    if (response.ok) {
+      return await response.json();
+    }
+    throw Error("Failed to getAllTempaltes().")
+  }
+
+  async function refreshTemplatesTable() {
+    try {
+      const templates = await getAllTemplates();
+      setData(templates);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    const refresh = async () => await refreshTemplatesTable();
+    refresh().catch(console.error);
+  }, []);
+
   // const buttons = [
   //     { text: 'Кнопка 1', onClick: handleButtonClick1 },
   //     { text: 'Кнопка 2', onClick: handleButtonClick2 },]
@@ -85,12 +122,12 @@ export default function MainPage() {
             </tr>
           </thead>
           <tbody>
-            {mokData.map((user) => (
-              <tr key={user.id}>
+            {data.map((template) => (
+              <tr key={template.templateId}>
                 <th scope="row"></th>
-                <td>{user.name}</td>
-                <td>{user.replies}</td>
-                <td>{user.author}</td>
+                <td>{template.title}</td>
+                <td>0</td>
+                <td>{template.authorName}</td>
               </tr>
             ))}
           </tbody>
