@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     element: <AuthorizationForm />,
   },
   {
-    path: '/constructor',
+    path: '/constructor/:id',
     element: <ConstructorForm />,
   }
 ])
@@ -42,7 +42,6 @@ function App() {
     // </div>
 
     <RouterProvider router={router} />
-
   );
 }
 

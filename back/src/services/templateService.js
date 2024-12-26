@@ -18,11 +18,22 @@ class TemplateService {
 
   static getAllTemplates = async () => this.executeSql(async () => {
     const response = await sql`
-      select template_id as "templateId", title, description, author_id as "authorId", app_user.name as "authorName", raw  
+      select template_id as "templateId", title, description, author_id as "authorId", app_user.name as "authorName"  
       from template
       inner join public.app_user app_user on template.author_id = app_user.app_user_id`
 
     return response
+  });
+
+  static getTemplate = async (id) => this.executeSql(async () => {
+    const response = await sql`
+      select template_id as "templateId", raw
+      from template
+      where template_id = ${id}`;
+
+    if (response.count == 0) return null;
+
+    return response[0];
   });
 
   static createTemplate = async ({ title, description, authorId, raw }) => this.executeSql(async () => {
