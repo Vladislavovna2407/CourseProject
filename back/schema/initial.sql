@@ -8,3 +8,12 @@ CREATE TABLE app_user (
 );
 
 CREATE UNIQUE INDEX email_lower_idx ON app_user (LOWER(email));
+
+CREATE TABLE template
+(
+    template_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title       TEXT    NOT NULL,
+    description TEXT    NOT NULL,
+    author_id   INTEGER NOT NULL,
+    raw         JSON
+);

@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from 'body-parser';
 import userRoutes from './routes/user.js'
 import authRoutes from './routes/auth.js'
+import templateRoutes  from './routes/template.js'
 import { basicAuth } from './utils/basicAuth.js'
 import { adminOnly } from "./utils/adminOnly.js";
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json())
 
 app.use(authRoutes)
 app.use('/users', basicAuth, adminOnly, userRoutes)
+app.use('/templates', templateRoutes)
 
 app.get((req, res) => {
     res.status(404).send('Page not found')

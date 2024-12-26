@@ -6,6 +6,9 @@ import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
 import './constructorForm.css';
 
+let url = "http://localhost:3001";
+const authKeyName = 'user';
+
 const creatorOptions = {
   showLogicTab: true,
   isAutoSave: false,
@@ -30,8 +33,21 @@ export default function ConstructorForm() {
     //   { name: "boolean", category: "Panels" },
     // ]);
 
-    creator.saveSurveyFunc = (no, callback) => {
-      console.log(JSON.stringify(creator.JSON));
+    creator.saveSurveyFunc = async (no, callback) => {
+      console.log();
+
+      const payload  = JSON.stringify(creator.JSON)
+      console.log(payload);
+
+      const response = await fetch(url + '/templates', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem(authKeyName),
+        },
+        body: payload
+      })
+
       callback(no, true);
     };
 
