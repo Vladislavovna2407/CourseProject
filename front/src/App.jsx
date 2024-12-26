@@ -11,23 +11,23 @@ import ConstructorForm from './Components/constructorForm/constructorForm';
 const router = createBrowserRouter([
   {
     path: '/',
-     element: <MainPage/>,
+    element: <MainPage />,
   },
   {
     path: '/admin',
-    element: <AdminPage/>,
+    element: <AdminPage />,
   },
   {
     path: '/register',
-    element: <RegisterForm/>,
+    element: <RegisterForm />,
   },
   {
     path: '/login',
-    element: <AuthorizationForm/>,
+    element: <AuthorizationForm />,
   },
   {
     path: '/constructor',
-    element: <ConstructorForm/>,
+    element: <ConstructorForm />,
   }
 ])
 
@@ -40,9 +40,9 @@ function App() {
     //   <AuthorizationForm />
 
     // </div>
-    
-      <RouterProvider router ={router}/>
-    
+
+    <RouterProvider router={router} />
+
   );
 }
 

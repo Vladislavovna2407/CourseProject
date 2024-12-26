@@ -184,26 +184,26 @@ export default function AdminPage() {
   }
 
   function renderRoleActions(user) {
-    if(user.isAdmin) {
+    if (user.isAdmin) {
       return (
-      <button
-      type="submit"
-      className="btn btn-outline-danger mx-1"
-      onClick={() => makeUser(user.id)}>
-        <i className="bi bi-person-x"></i>
-      
-    </button>
-    );
-  } 
+        <button
+          type="submit"
+          className="btn btn-outline-danger mx-1"
+          onClick={() => makeUser(user.id)}>
+          <i className="bi bi-person-x"></i>
 
-  return(
-    <button
-    type="submit"
-    className="btn btn-outline-success mx-1"
-    onClick={() => makeAdmin(user.id)}>
-    <i className="bi bi-person-plus-fill"></i>
-  </button>
-  );
+        </button>
+      );
+    }
+
+    return (
+      <button
+        type="submit"
+        className="btn btn-outline-success mx-1"
+        onClick={() => makeAdmin(user.id)}>
+        <i className="bi bi-person-plus-fill"></i>
+      </button>
+    );
   }
 
 
