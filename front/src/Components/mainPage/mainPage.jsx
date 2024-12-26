@@ -101,7 +101,7 @@ export default function MainPage() {
     onClick: handleButtonConstructor
   },
   {
-    text: 'Log in',
+    text: 'Log out',
     onClick: goLogin
   },
   ]
