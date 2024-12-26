@@ -1,5 +1,5 @@
 import express from 'express'
-import { body, matchedData, validationResult } from 'express-validator'
+import { param, body, matchedData, validationResult } from 'express-validator'
 import HttpError from '../utils/httpError.js';
 import asyncUtil from '../utils/asyncUtil.js';
 import TemplateService from '../services/templateService.js';
@@ -19,6 +19,23 @@ router.get(
   asyncUtil(async function (req, res) {
     const templates = await TemplateService.getAllTemplates();
     res.json(templates)
+  })
+)
+
+router.get(
+  '/:id',
+  [
+    param('id').notEmpty().isInt()
+  ],
+  asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req);
+
+    const template = await TemplateService.getTemplate(req.params.id);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    return res.json(template.raw);
   })
 )
 

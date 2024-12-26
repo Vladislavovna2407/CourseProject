@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router"
 import Nav from "../nav/nav";
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
 import './constructorForm.css';
-
-let url = "http://localhost:3001";
-const authKeyName = 'user';
+import { createTemplate, getTemplate } from '../../Api/Api.js'
 
 const creatorOptions = {
   showLogicTab: true,
@@ -19,12 +18,16 @@ const creatorOptions = {
 
 export default function ConstructorForm() {
   let [creator, setCreator] = useState();
+  const params = useParams()
+
+  const templateId = params.id;
+  console.log(`TemplateId: ${templateId}`)
+
   const navigate = useNavigate();
 
   if (creator === undefined) {
 
     creator = new SurveyCreator(creatorOptions);
-
     creator.toolbox.forceCompact = true;
     // creator.toolbox.changeCategories([
     //   { name: "text", category: "Panels" },
@@ -34,22 +37,13 @@ export default function ConstructorForm() {
     // ]);
 
     creator.saveSurveyFunc = async (no, callback) => {
-      console.log();
-
-      const payload  = JSON.stringify(creator.JSON)
-      console.log(payload);
-
-      const response = await fetch(url + '/templates', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem(authKeyName),
-        },
-        body: payload
-      })
-
+      await createTemplate(JSON.stringify(creator.JSON));
       callback(no, true);
     };
+
+    getTemplate(templateId).then(template => {
+      creator.JSON = template;
+    });
 
     setCreator(creator);
   }
