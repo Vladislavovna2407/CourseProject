@@ -120,7 +120,7 @@ export default function AdminPage() {
 
 
   const navForAdminPage = [{
-    text: 'Main',
+    text: 'Templates table',
     onClick: handleButtonMain
   },
   {

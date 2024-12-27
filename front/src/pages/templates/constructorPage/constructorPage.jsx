@@ -52,7 +52,7 @@ export default function ConstructorPage() {
   }
 
   const navForConstructorPage = [{
-    text: 'Main',
+    text: 'Templates table',
     onClick: handleButtonMain
   },
   {

@@ -93,7 +93,7 @@ export default function TemplatesTablePage() {
   ]
 
   const navForMainPage = [{
-    text: 'Main',
+    text: 'Templates table',
     onClick: handleButtonMain
   },
   {
@@ -125,7 +125,7 @@ export default function TemplatesTablePage() {
             {data.map((template) => (
               <tr key={template.templateId}>
                 <th scope="row"></th>
-                <td><a href="">{template.title}</a></td>
+                <td><a className='links' href="">{template.title}</a></td>
                 <td>0</td>
                 <td>{template.authorName}</td>
               </tr>
