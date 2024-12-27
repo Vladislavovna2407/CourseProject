@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react'
 import './adminPage.css'
 import { useEffect } from 'react'
-import Nav from '../../../Components/nav/nav';
 import Header from '../../../Components/header/header';
 
 
