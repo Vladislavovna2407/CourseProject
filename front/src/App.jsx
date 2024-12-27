@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import RegisterPage from './pages/authentication/registerPage/registerForm';
 import LoginPage from './pages/authentication/loginPage/loginPage';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
 import TemplatesTablePage from './pages/templates/templatesTablePage/templatesTablePage';
 import AnswerPage from './pages/answers/answerPage/answerPage';
 import ConstructorPage from './pages/templates/constructorPage/constructorPage'
@@ -11,27 +11,30 @@ import AdminPage from './pages/admin/adminPage/adminPage'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <TemplatesTablePage />,
-  },
-  {
-    path: '/admin',
-    element: <AdminPage />,
-  },
-  {
-    path: '/register',
-    element: <RegisterPage />,
+    loader: async () => redirect('/templates')
   },
   {
     path: '/login',
     element: <LoginPage />,
   },
   {
-    //path: '/constructor/:id',
-    path: '/constructor',
+    path: '/register',
+    element: <RegisterPage />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPage />,
+  },
+  {
+    path: '/templates',
+    element: <TemplatesTablePage />,
+  },
+  {
+    path: '/templates/create',
     element: <ConstructorPage />,
   },
   {
-    path: '/forms/:id',
+    path: '/answers/:id',
     element: <AnswerPage />,
   }
 ])
