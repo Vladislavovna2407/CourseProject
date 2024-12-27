@@ -36,8 +36,8 @@ export async function getTemplate(id) {
   throw Error("Failed to getTemplate().");
 }
 
-export async function saveResponse(templateId, model){
-  const response =  await fetch(API_URL + '/templates/' + templateId + '/answers', {
+export async function saveResponse(templateId, model) {
+  const response = await fetch(API_URL + '/templates/' + templateId + '/answers', {
     method: "POST",
     headers: GetDefaultHeaders(),
     body: JSON.stringify(model)
@@ -48,4 +48,14 @@ export async function saveResponse(templateId, model){
   }
 
   throw Error("Failed to saveResponse().");
+}
+
+export async function getAllTemplates() {
+  const response = await fetch(API_URL + '/templates', {
+    headers: GetDefaultHeaders(),
+  })
+  if (response.ok) {
+    return await response.json();
+  }
+  throw Error("Failed to getAllTempaltes().")
 }

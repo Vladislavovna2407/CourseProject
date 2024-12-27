@@ -4,8 +4,8 @@
 }
 
 .custom-form {
-    margin:  150px auto !important;
-    max-width: 420px !important; 
+    margin: 150px auto !important;
+    max-width: 420px !important;
 }
 
 h2 {
@@ -17,5 +17,5 @@ p {
 }
 
 span {
-   text-transform: uppercase;
+    text-transform: uppercase;
 }

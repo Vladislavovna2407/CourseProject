@@ -1,0 +1,18 @@
+.btn-nav {
+    background-color: #6c757d !important;
+    margin: 15px 10px 10px;
+    justify-content: center !important;
+}
+
+.btn-nav:focus {
+    border: 1px solid #6c757d !important;
+    background-color: #fff !important;
+    color: #6c757d !important;
+}
+
+ul {
+    display: flex;
+    background-color:  #f8f9fa !important;
+    /* background-color:  #e9ecef !important; */
+}
+
