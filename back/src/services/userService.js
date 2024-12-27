@@ -17,9 +17,12 @@ class UserService {
   }
 
   static createUser = async ({ email, name, password }) => this.executeSql(async () => {
-    await sql`
+    const response = await sql`
     INSERT INTO app_user (email, name, password, is_active, is_admin)
-    VALUES (${email}, ${name}, ${password}, true, true)`
+    VALUES (${email}, ${name}, ${password}, true, true)
+    RETURNING app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"`
+
+    return response[0]
   });
 
   static findUser = async ({ email, password }) => this.executeSql(async () => {
@@ -30,7 +33,7 @@ class UserService {
 
     if (response.count == 0) return null;
 
-    return response[0];
+    return response[0]
   });
 
 

@@ -59,7 +59,7 @@ export default function LoginPage() {
       localStorage.setItem('user', `Basic ${encrypted}`)
       localStorage.setItem('current-user', user)
       setUser(user)
-      navigate('/admin')
+      navigate('/templates')
     } else {
       const json = await response.json();
       console.log(json.message)

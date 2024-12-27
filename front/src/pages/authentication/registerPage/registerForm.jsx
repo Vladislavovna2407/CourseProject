@@ -1,7 +1,8 @@
 import './registerPage.css'
-import React, { useState } from "react"
+import { useState, useContext} from "react"
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/userContext"
 
 export default function RegisterPage() {
 
@@ -11,6 +12,8 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
+
+  const { setUser } = useContext(UserContext);
 
   function handleName(event) {
     setName(event.target.value)
@@ -60,19 +63,18 @@ export default function RegisterPage() {
     })
 
     if (response.ok) {
+      const user = await response.json();
       const encrypted = btoa(request.email + ':' + request.password);
-      localStorage.setItem('user', `Basic ${encrypted}`);
-      navigate('/admin')
+      localStorage.setItem('user', `Basic ${encrypted}`)
+      localStorage.setItem('current-user', user)
+      setUser(user)
+      navigate('/templates')
     } else {
       const json = await response.json();
       console.log(json.message)
     }
 
   }
-
-
-
-
 
   return (
     <div>

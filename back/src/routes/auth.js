@@ -24,9 +24,9 @@ router.post(
   asyncUtil(async function (req, res) {
     ensureRequestIsValid(req);
 
-    await UserService.createUser(matchedData(req))
+    const user = await UserService.createUser(matchedData(req))
 
-    return res.status(201).end();
+    return res.status(200).json(user);
   })
 )
 
