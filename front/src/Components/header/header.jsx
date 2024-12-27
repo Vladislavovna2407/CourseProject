@@ -20,6 +20,13 @@ export default function Header() {
         text: '+ New form',
         onClick: () => navigate('/templates/create')
       })
+    if (user.isAdmin) {
+      buttons.push(
+        {
+          text: 'User Management',
+          onClick: () => navigate('/admin')
+        })
+    }
     buttons.push(
       {
         text: 'Log out',
@@ -29,6 +36,8 @@ export default function Header() {
           navigate('/login')
         }
       })
+    console.log(user.id);
+
   } else {
     buttons.push(
       {

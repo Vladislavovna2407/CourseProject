@@ -66,7 +66,7 @@ export default function RegisterPage() {
       const user = await response.json();
       const encrypted = btoa(request.email + ':' + request.password);
       localStorage.setItem('user', `Basic ${encrypted}`)
-      localStorage.setItem('current-user', user)
+      localStorage.setItem('current-user', JSON.stringify(user))
       setUser(user)
       navigate('/templates')
     } else {
