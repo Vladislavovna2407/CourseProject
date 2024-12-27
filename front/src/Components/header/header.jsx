@@ -7,12 +7,12 @@ export default function Header() {
   const navigate = useNavigate();
 
   const buttons = [{
-    text: 'Main',
+    text: 'Templates',
     onClick: () => navigate('/')
   },
   {
-    text: 'Constructor',
-    onClick: () => navigate('/constructor')
+    text: '+ New form',
+    onClick: () => navigate('/templates/create')
   },
   {
     text: 'Log out',

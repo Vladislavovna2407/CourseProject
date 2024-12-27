@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router"
-import Nav from "../../../Components/nav/nav.jsx";
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
 import './constructorPage.css';
 import { createTemplate, getTemplate } from '../../../Api/Api.js'
+import Header from "../../../Components/header/header";
 
 const creatorOptions = {
   showLogicTab: true,
@@ -26,7 +24,6 @@ export default function ConstructorPage() {
   // const templateId = params.id;
   // console.log(`TemplateId: ${templateId}`)
 
-  const navigate = useNavigate();
 
   if (creator === undefined) {
 
@@ -51,35 +48,10 @@ export default function ConstructorPage() {
     setCreator(creator);
   }
 
-  const navForConstructorPage = [{
-    text: 'Templates table',
-    onClick: handleButtonMain
-  },
-  {
-    text: 'Users list',
-    onClick: handleButtonConstructor
-  },
-  {
-    text: 'Log out',
-    onClick: goAuthorization
-  },
-  ]
-
-  function handleButtonConstructor() {
-    navigate("/admin")
-  }
-
-  function handleButtonMain() {
-    navigate('/')
-  }
-
-  function goAuthorization() {
-    navigate('/login')
-  }
 
   return (
     <div className="App">
-      <Nav buttonTexts={navForConstructorPage} />
+      <Header />
       <SurveyCreatorComponent creator={creator} />
     </div>
   )
