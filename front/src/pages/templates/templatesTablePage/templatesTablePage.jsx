@@ -1,9 +1,9 @@
 import { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Nav from '../nav/nav'
-import './mainPage.css'
+import Nav from '../../../Components/nav/nav'
+import './templatesTablePage.css'
 
-export default function MainPage() {
+export default function TemplatesTablePage() {
 
   let [data, setData] = useState([]);
   let url = 'http://localhost:3001';

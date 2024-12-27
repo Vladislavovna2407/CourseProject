@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router"
-import Nav from "../nav/nav";
+import Nav from "../../../Components/nav/nav.jsx";
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
-import './constructorForm.css';
-import { createTemplate, getTemplate } from '../../Api/Api.js'
+import './constructorPage.css';
+import { createTemplate, getTemplate } from '../../../Api/Api.js'
 
 const creatorOptions = {
   showLogicTab: true,
@@ -19,7 +19,7 @@ const creatorOptions = {
   //questionTypes: ["text", "checkbox", "radiogroup", "boolean"],
 };
 
-export default function ConstructorForm() {
+export default function ConstructorPage() {
   let [creator, setCreator] = useState();
   // const params = useParams()
 

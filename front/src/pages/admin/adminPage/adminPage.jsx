@@ -1,8 +1,8 @@
 import { Fragment, useState } from 'react'
 import './adminPage.css'
-import Nav from '../nav/nav'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import Nav from '../../../Components/nav/nav';
 
 
 export default function AdminPage() {
@@ -10,8 +10,6 @@ export default function AdminPage() {
   const url = "http://localhost:3001";
 
   const [data, setData] = useState([]);
-
-
 
   const navigate = useNavigate();
 

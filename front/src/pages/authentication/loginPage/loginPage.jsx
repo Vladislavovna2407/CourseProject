@@ -1,11 +1,11 @@
 import bootstrap from "bootstrap"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import './authorizationForm.css'
+import './loginPage.css'
 import { useForm } from "react-hook-form"
 
 
-export default function AuthorizationForm() {
+export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

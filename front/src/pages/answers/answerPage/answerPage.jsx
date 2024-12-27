@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router"
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
-import { getTemplate, saveResponse } from '../../Api/Api.js'
+import { getTemplate, saveResponse } from '../../../Api/Api.js'
 
-export default function ResponsePage() {
+export default function AnswerPage() {
   const [template, setTemplate] = useState(null);
   const params = useParams()
 

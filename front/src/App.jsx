@@ -1,18 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import RegisterForm from './Components/registerForm/registerForm';
-import AuthorizationForm from './Components/authorizationForm/authorizationForm';
+import RegisterPage from './pages/authentication/registerPage/registerForm';
+import LoginPage from './pages/authentication/loginPage/loginPage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import MainPage from './Components/mainPage/mainPage';
-import AdminPage from './Components/adminPage/adminPage';
-import ConstructorForm from './Components/constructorForm/constructorForm';
-import ResponsePage from './Components/responsePage/responsePage';
-
+import TemplatesTablePage from './pages/templates/templatesTablePage/templatesTablePage';
+import AnswerPage from './pages/answers/answerPage/answerPage';
+import ConstructorPage from './pages/templates/constructorPage/constructorPage'
+import AdminPage from './pages/admin/adminPage/adminPage'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainPage />,
+    element: <TemplatesTablePage />,
   },
   {
     path: '/admin',
@@ -20,20 +19,20 @@ const router = createBrowserRouter([
   },
   {
     path: '/register',
-    element: <RegisterForm />,
+    element: <RegisterPage />,
   },
   {
     path: '/login',
-    element: <AuthorizationForm />,
+    element: <LoginPage />,
   },
   {
     //path: '/constructor/:id',
     path: '/constructor',
-    element: <ConstructorForm />,
+    element: <ConstructorPage />,
   },
   {
     path: '/forms/:id',
-    element: <ResponsePage />,
+    element: <AnswerPage />,
   }
 ])
 
