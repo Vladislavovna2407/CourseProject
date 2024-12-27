@@ -1,8 +1,8 @@
 import { Fragment, useState } from 'react'
 import './adminPage.css'
-import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Nav from '../../../Components/nav/nav';
+import Header from '../../../Components/header/header';
 
 
 export default function AdminPage() {
@@ -10,8 +10,6 @@ export default function AdminPage() {
   const url = "http://localhost:3001";
 
   const [data, setData] = useState([]);
-
-  const navigate = useNavigate();
 
   function GetDefaultHeaders() {
     return {
@@ -74,77 +72,6 @@ export default function AdminPage() {
     return await refreshUsersTable();
   }
 
-  // const  navForAdminPage = ['Main', 'Constructor', 'Log out'];
-  //   const mokList = [{
-  //       name: 'Ira',
-  //       email: 'ira@mail.com',
-  //       id: '1',
-  //       lastSeen: '11-12-2024',
-  //       status:' active'
-  //   },
-  //   {
-  //     name: 'Ira',
-  //     email: 'ira@mail.com',
-  //     id: '2',
-  //     lastSeen: '11-12-2024',
-  //     status:' active'
-  // },
-  // {
-  //     name: 'Ira',
-  //     email: 'ira@mail.com',
-  //     id: '3',
-  //     lastSeen: '11-12-2024',
-  //     status:' active'
-  // },
-  // {
-  //     name: 'Ira',
-  //     email: 'ira@mail.com',
-  //     id: '4',
-  //     lastSeen: '11-12-2024',
-  //     status:' active'
-  // },
-  // {
-  //     name: 'Ira',
-  //     email: 'ira@mail.com',
-  //     id: '5',
-  //     lastSeen: '11-12-2024',
-  //     status:' active'
-  // },
-  // {
-  //     name: 'Ira',
-  //     email: 'ira@mail.com',
-  //     id: '6',
-  //     lastSeen: '11-12-2024',
-  //     status:' active'
-  // }]
-
-
-  const navForAdminPage = [{
-    text: 'Templates table',
-    onClick: handleButtonMain
-  },
-  {
-    text: 'Constructor',
-    onClick: handleButtonConstructor
-  },
-  {
-    text: 'Log out',
-    onClick: goAuthorization
-  },
-  ]
-
-  function handleButtonConstructor() {
-    navigate("/constructor")
-  }
-
-  function handleButtonMain() {
-    navigate('/')
-  }
-
-  function goAuthorization() {
-    navigate('/login')
-  }
-
   async function refreshUsersTable() {
     try {
       const users = await getAllUsers();
@@ -204,10 +131,9 @@ export default function AdminPage() {
     );
   }
 
-
   return (
     <Fragment>
-      <Nav buttonTexts={navForAdminPage} />
+      <Header />
       <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
           <caption className="caption">Users List</caption>
