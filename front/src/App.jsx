@@ -26,7 +26,8 @@ const router = createBrowserRouter([
     element: <AuthorizationForm />,
   },
   {
-    path: '/constructor/:id',
+    //path: '/constructor/:id',
+    path: '/constructor',
     element: <ConstructorForm />,
   }
 ])

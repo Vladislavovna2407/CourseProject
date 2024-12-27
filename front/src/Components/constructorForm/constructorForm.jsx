@@ -18,10 +18,10 @@ const creatorOptions = {
 
 export default function ConstructorForm() {
   let [creator, setCreator] = useState();
-  const params = useParams()
+  // const params = useParams()
 
-  const templateId = params.id;
-  console.log(`TemplateId: ${templateId}`)
+  // const templateId = params.id;
+  // console.log(`TemplateId: ${templateId}`)
 
   const navigate = useNavigate();
 
@@ -41,9 +41,9 @@ export default function ConstructorForm() {
       callback(no, true);
     };
 
-    getTemplate(templateId).then(template => {
-      creator.JSON = template;
-    });
+    // getTemplate(templateId).then(template => {
+    //   creator.JSON = template;
+    // });
 
     setCreator(creator);
   }

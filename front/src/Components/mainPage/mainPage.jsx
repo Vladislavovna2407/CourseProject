@@ -125,7 +125,7 @@ export default function MainPage() {
             {data.map((template) => (
               <tr key={template.templateId}>
                 <th scope="row"></th>
-                <td>{template.title}</td>
+                <td><a href="">{template.title}</a></td>
                 <td>0</td>
                 <td>{template.authorName}</td>
               </tr>
