@@ -13,6 +13,9 @@ const creatorOptions = {
   isAutoSave: false,
   showTranslationTab: true,
   showSidebar: false,
+  showLogicTab: false,
+  showJSONEditorTab: false,
+  showTranslationTab: false,
   //questionTypes: ["text", "checkbox", "radiogroup", "boolean"],
 };
 
