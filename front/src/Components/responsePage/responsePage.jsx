@@ -4,9 +4,7 @@ import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 import { getTemplate, saveResponse } from '../../Api/Api.js'
 
-
 export default function ResponsePage() {
-  const [loading, setLoading] = useState(true);
   const [template, setTemplate] = useState(null);
   const params = useParams()
 
@@ -16,13 +14,8 @@ export default function ResponsePage() {
     getTemplate(templateId)
       .then(result => {
         setTemplate(result);
-        setLoading(false);
       });
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const survey = new Model(template);
 
