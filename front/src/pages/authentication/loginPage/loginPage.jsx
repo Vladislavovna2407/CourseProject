@@ -1,14 +1,16 @@
 import bootstrap from "bootstrap"
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import './loginPage.css'
 import { useForm } from "react-hook-form"
+import { UserContext } from "../../../context/userContext"
 
 
 export default function LoginPage() {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { setUser } = useContext(UserContext);
 
   let url = "http://localhost:3001";
 
@@ -52,8 +54,11 @@ export default function LoginPage() {
     })
 
     if (response.ok) {
+      const user = await response.json();
       const encrypted = btoa(request.email + ':' + request.password);
       localStorage.setItem('user', `Basic ${encrypted}`)
+      localStorage.setItem('current-user', user)
+      setUser(user)
       navigate('/admin')
     } else {
       const json = await response.json();
@@ -61,11 +66,6 @@ export default function LoginPage() {
     }
 
   }
-
-
-
-
-
 
   return (
     <div>

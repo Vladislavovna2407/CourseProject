@@ -1,24 +1,42 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from "../../context/userContext"
 import './header.css'
 
 export default function Header() {
-
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
-  const buttons = [{
-    text: 'Templates',
-    onClick: () => navigate('/')
-  },
-  {
-    text: '+ New form',
-    onClick: () => navigate('/templates/create')
-  },
-  {
-    text: 'Log out',
-    onClick: () => navigate("/login") // TODO: clean up localStorage
-  },
-  ]
+  const buttons = [
+    {
+      text: 'Templates',
+      onClick: () => navigate('/')
+    }
+  ];
+
+  if (user) {
+    buttons.push(
+      {
+        text: '+ New form',
+        onClick: () => navigate('/templates/create')
+      })
+    buttons.push(
+      {
+        text: 'Log out',
+        onClick: () => {
+          localStorage.removeItem('user')
+          localStorage.removeItem('current-user')
+          navigate('/login')
+        }
+      })
+  } else {
+    buttons.push(
+      {
+        text: 'Log in',
+        onClick: () => navigate("/login") // TODO: clean up localStorage
+      },
+    )
+  }
 
   return (
     <Fragment>
