@@ -37,7 +37,7 @@ export default function ConstructorForm() {
     // ]);
 
     creator.saveSurveyFunc = async (no, callback) => {
-      await createTemplate(JSON.stringify(creator.JSON));
+      await createTemplate(creator.JSON);
       callback(no, true);
     };
 
@@ -47,7 +47,6 @@ export default function ConstructorForm() {
 
     setCreator(creator);
   }
-  //creator.text = window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
 
   const navForConstructorPage = [{
     text: 'Main',

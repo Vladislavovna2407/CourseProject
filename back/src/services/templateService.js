@@ -41,6 +41,13 @@ class TemplateService {
     insert into template(title, description, author_id, raw)
     values (${title}, ${description}, ${authorId}, ${raw})`
   });
+
+  static deleteTemplate = async (id) => this.executeSql(async () => {
+    await sql`
+    DELETE 
+    FROM public.template
+    WHERE template_id = ${id}`;
+  });
 }
 
 export default TemplateService;
