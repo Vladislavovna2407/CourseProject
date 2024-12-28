@@ -8,6 +8,7 @@ import AnswerPage from './pages/answers/answerPage/answerPage';
 import ConstructorPage from './pages/templates/constructorPage/constructorPage'
 import AdminPage from './pages/admin/adminPage/adminPage'
 import EditTemplatePage from './pages/templates/editTemplatePage/editTemplatePage';
+import ViewAnswerPage from './pages/answers/viewAnswerPage/viewAnswerPage';
 
 const router = createBrowserRouter([
   {
@@ -35,12 +36,16 @@ const router = createBrowserRouter([
     element: <ConstructorPage />,
   },
   {
-    path: '/templates/:id',
+    path: '/templates/:templateId',
     element: <EditTemplatePage />,
   },
   {
-    path: '/answers/:id',
+    path: '/templates/:templateId/answers',
     element: <AnswerPage />,
+  },
+  {
+    path: '/templates/:templateId/answers/:answerId',
+    element: <ViewAnswerPage />,
   }
 ])
 

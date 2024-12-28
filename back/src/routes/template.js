@@ -52,7 +52,7 @@ router.delete(
     if (!template) {
       throw new HttpError(404, "The template not found")
     }
-    
+
     if (req.user.isAdmin || template.authorId == req.user.id) {
       await TemplateService.deleteTemplate(template.templateId)
       return res.status(204).end();
@@ -113,13 +113,55 @@ router.patch(
 )
 
 router.post(
-  '/:id/answers',
+  '/:templateId/answers',
   basicAuth,
+  [
+    param('templateId').notEmpty().isInt(),
+  ],
   asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req)
 
-    console.log(req.body)
+    if (!req.body) {
+      throw new HttpError(400, "The body is empty")
+    }
+
+    const template = await TemplateService.getTemplate(req.params.templateId);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    await TemplateService.createAnswer(template.templateId, req.user.id, req.body)
 
     res.status(204).end()
+  })
+)
+
+router.get(
+  '/:templateId/answers/:answerId',
+  basicAuth,
+  [
+    param('templateId').notEmpty().isInt(),
+    param('answerId').notEmpty().isInt(),
+  ],
+  asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req)
+
+    const template = await TemplateService.getTemplate(req.params.templateId);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    if (req.user.isAdmin || template.authorId == req.user.id) {
+      const answer = await TemplateService.getAswer(template.templateId, req.params.answerId);
+
+      if (!answer) {
+        throw new HttpError(404, "The answer not found")
+      }
+
+      return res.json(answer.raw);
+    }
+
+    throw new HttpError(403, "The user is not authorized to perform this opeartion")
   })
 )
 

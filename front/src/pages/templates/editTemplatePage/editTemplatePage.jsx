@@ -23,7 +23,7 @@ export default function EditTemplatePage() {
   let [creator, setCreator] = useState();
   const params = useParams()
 
-  const templateId = params.id;
+  const templateId = params.templateId;
 
   if (creator === undefined) {
 
@@ -43,8 +43,6 @@ export default function EditTemplatePage() {
         console.log(error);
         navigate('/');
       })
-
-    
 
     setCreator(creator);
   }

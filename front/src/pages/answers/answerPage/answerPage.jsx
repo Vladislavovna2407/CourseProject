@@ -3,12 +3,13 @@ import { useParams } from "react-router"
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 import { getTemplate, saveResponse } from '../../../Api/Api.js'
+import Header from "../../../Components/header/header.jsx";
 
 export default function AnswerPage() {
   const [template, setTemplate] = useState(null);
   const params = useParams()
 
-  const templateId = params.id;
+  const templateId = params.templateId;
 
   useEffect(() => {
     getTemplate(templateId)
@@ -20,12 +21,17 @@ export default function AnswerPage() {
   const survey = new Model(template);
 
   const surveyComplete = (survey) => {
-    survey.setValue("userId", 'user-not-set-yet')
+    //survey.setValue("userId", 'user-not-set-yet')
 
-    saveResponse(templateId, survey.data)
+    saveResponse(templateId, survey.data);
   };
 
   survey.onComplete.add(surveyComplete);
 
-  return <Survey model={survey} />;
+  return (
+    <div className="App">
+      <Header />
+      <Survey model={survey} />
+    </div>
+  )
 }

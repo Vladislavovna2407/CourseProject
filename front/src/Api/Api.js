@@ -73,3 +73,16 @@ export async function getAllTemplates() {
   }
   throw Error("Failed to getAllTempaltes().")
 }
+
+export async function getAnswer(templateId, answerId) {
+  const response = await fetch(API_URL + `/templates/${templateId}/answers/${answerId}`, {
+    method: "GET",
+    headers: GetDefaultHeaders()
+  })
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw Error("Failed to getAnswer().");
+}

@@ -57,6 +57,23 @@ class TemplateService {
     FROM public.template
     WHERE template_id = ${id}`;
   });
+
+  static createAnswer = async (templateId, responderId, raw) => this.executeSql(async () => {
+    await sql`
+    INSERT INTO answer (template_id, responder_id, raw)
+    VALUES (${templateId}, ${responderId}, ${raw})`
+  });
+
+  static getAswer = async (templateId, answerId) => this.executeSql(async () => {
+    const response = await sql`
+      SELECT answer_id as "answerId", raw
+      FROM answer
+      WHERE template_id = ${templateId} AND answer_id = ${answerId}`;
+
+    if (response.count == 0) return null;
+
+    return response[0];
+  });
 }
 
 export default TemplateService;

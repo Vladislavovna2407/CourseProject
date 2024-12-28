@@ -36,8 +36,6 @@ export default function Header() {
           navigate('/login')
         }
       })
-    console.log(user.id);
-
   } else {
     buttons.push(
       {
