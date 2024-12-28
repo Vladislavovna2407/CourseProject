@@ -52,9 +52,9 @@ router.delete(
     if (!template) {
       throw new HttpError(404, "The template not found")
     }
-
-    if (user.isAdmin || template.authorId == user.id) {
-      await TemplateService.deleteTemplate(template.id)
+    
+    if (req.user.isAdmin || template.authorId == req.user.id) {
+      await TemplateService.deleteTemplate(template.templateId)
       return res.status(204).end();
     }
 
@@ -77,11 +77,38 @@ router.post(
     data.raw = req.body
     data.authorId = req.user.id
 
-    console.log(data)
-
     await TemplateService.createTemplate(data);
 
     res.status(204).end()
+  })
+)
+
+router.patch(
+  '/:id',
+  basicAuth,
+  [
+    param('id').notEmpty().isInt(),
+    body('title').notEmpty(),
+    body('description').notEmpty(),
+    body('pages').notEmpty()
+  ],
+  asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req)
+
+    const template = await TemplateService.getTemplate(req.params.id);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    const data = matchedData(req)
+    data.raw = req.body
+
+    if (req.user.isAdmin || template.authorId == req.user.id) {
+      await TemplateService.updateTemplate(template.templateId, data)
+      return res.status(204).end();
+    }
+
+    throw new HttpError(403, "The user is not authorized to perform this opeartion")
   })
 )
 

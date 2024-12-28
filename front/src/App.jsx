@@ -7,6 +7,7 @@ import TemplatesTablePage from './pages/templates/templatesTablePage/templatesTa
 import AnswerPage from './pages/answers/answerPage/answerPage';
 import ConstructorPage from './pages/templates/constructorPage/constructorPage'
 import AdminPage from './pages/admin/adminPage/adminPage'
+import EditTemplatePage from './pages/templates/editTemplatePage/editTemplatePage';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/templates/create',
     element: <ConstructorPage />,
+  },
+  {
+    path: '/templates/:id',
+    element: <EditTemplatePage />,
   },
   {
     path: '/answers/:id',

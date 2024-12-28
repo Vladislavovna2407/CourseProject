@@ -23,6 +23,20 @@ export async function createTemplate(payload) {
   throw Error("Failed to createTemplate().");
 }
 
+export async function updateTemplate(id, payload){
+  const response = await fetch(API_URL + '/templates/' + id, {
+    method: "PATCH",
+    headers: GetDefaultHeaders(),
+    body: JSON.stringify(payload)
+  })
+
+  if (response.ok) {
+    return;
+  }
+
+  throw Error("Failed to updateTemplate().");
+}
+
 export async function getTemplate(id) {
   const response = await fetch(API_URL + '/templates/' + id, {
     method: "GET",

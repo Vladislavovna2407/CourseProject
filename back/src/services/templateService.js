@@ -42,6 +42,15 @@ class TemplateService {
     values (${title}, ${description}, ${authorId}, ${raw})`
   });
 
+  static updateTemplate = async (id, { title, description, raw }) => this.executeSql(async () => {
+    await sql`
+    UPDATE template
+    SET title = ${title},
+        description = ${description},
+        raw = ${raw}
+    WHERE template_id = ${id}`;
+  });
+
   static deleteTemplate = async (id) => this.executeSql(async () => {
     await sql`
     DELETE 
