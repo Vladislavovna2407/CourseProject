@@ -4,7 +4,7 @@ import RegisterPage from './pages/authentication/registerPage/registerForm';
 import LoginPage from './pages/authentication/loginPage/loginPage';
 import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
 import TemplatesTablePage from './pages/templates/templatesTablePage/templatesTablePage';
-import AnswerPage from './pages/answers/answerPage/answerPage';
+import CreateAnswerPage from './pages/answers/answerPage/answerPage';
 import ConstructorPage from './pages/templates/constructorPage/constructorPage'
 import AdminPage from './pages/admin/adminPage/adminPage'
 import EditTemplatePage from './pages/templates/editTemplatePage/editTemplatePage';
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/templates/:templateId/answers',
-    element: <AnswerPage />,
+    element: <CreateAnswerPage />,
   },
   {
     path: '/templates/:templateId/answers/:answerId',

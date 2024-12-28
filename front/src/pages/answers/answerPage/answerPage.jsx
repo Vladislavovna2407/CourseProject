@@ -5,7 +5,7 @@ import { Survey } from 'survey-react-ui';
 import { getTemplate, saveResponse } from '../../../Api/Api.js'
 import Header from "../../../Components/header/header.jsx";
 
-export default function AnswerPage() {
+export default function CreateAnswerPage() {
   const [template, setTemplate] = useState(null);
   const params = useParams()
 
