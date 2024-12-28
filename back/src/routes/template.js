@@ -165,4 +165,27 @@ router.get(
   })
 )
 
+router.get(
+  '/:templateId/answers',
+  basicAuth,
+  [
+    param('templateId').notEmpty().isInt(),
+  ],
+  asyncUtil(async function (req, res) {
+    ensureRequestIsValid(req)
+
+    const template = await TemplateService.getTemplate(req.params.templateId);
+    if (!template) {
+      throw new HttpError(404, "The template not found")
+    }
+
+    if (req.user.isAdmin || template.authorId == req.user.id) {
+      const answers = await TemplateService.getAllAnswers(req.params.templateId);
+      return res.json(answers)
+    }
+
+    throw new HttpError(403, "The user is not authorized to perform this opeartion")
+  })
+)
+
 export default router

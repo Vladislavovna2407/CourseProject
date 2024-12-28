@@ -74,6 +74,17 @@ class TemplateService {
 
     return response[0];
   });
+
+  static getAllAnswers = async (templateId) => this.executeSql(async () => {
+    const response = await sql`
+      SELECT answer.answer_id as "answerId", answer.responder_id as "responderId", u.name as "responderName"
+      FROM answer
+      INNER JOIN public.template t on answer.template_id = t.template_id
+      INNER JOIN public.app_user u on answer.responder_id = u.app_user_id
+      WHERE t.template_id = ${templateId}`
+
+    return response
+  });
 }
 
 export default TemplateService;
