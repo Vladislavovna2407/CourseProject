@@ -2,6 +2,8 @@ import { Fragment, useState } from 'react'
 import './adminPage.css'
 import { useEffect } from 'react'
 import Header from '../../../Components/header/header';
+import { getAllUsers, deleteUserRequest, blockUserRequest, unblockUserRequest, makeAdminRequest, makeUserRequest } from '../../../Api/Api';
+
 
 
 export default function AdminPage() {
@@ -10,64 +12,91 @@ export default function AdminPage() {
 
   const [data, setData] = useState([]);
 
-  function GetDefaultHeaders() {
-    return {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem(authKeyName),
-    };
-  }
+  // function GetDefaultHeaders() {
+  //   return {
+  //     "Content-Type": "application/json",
+  //     Authorization: localStorage.getItem(authKeyName),
+  //   };
+  // }
 
-  async function getAllUsers() {
-    const response = await fetch(url + '/users/', {
-      headers: GetDefaultHeaders(),
-    })
-    if (response.ok) {
-      return await response.json();
-    }
-    throw Error("Failed to getAllUsers().");
-  }
+
+  // async function getAllUsers() {
+  //   const response = await fetch(url + '/users/', {
+  //     headers: GetDefaultHeaders(),
+  //   })
+  //   if (response.ok) {
+  //     return await response.json();
+  //   }
+  //   throw Error("Failed to getAllUsers().");
+  // }
+
+
+  // async function deleteUser(id) {
+  //   const response = await fetch(url + `/users/${id}`, {
+  //     headers: GetDefaultHeaders(),
+  //     method: 'DELETE',
+  //   })
+  //   await refreshUsersTable();
+  // }
+
+  // async function blockUser(id) {
+  //   const response = await fetch(url + `/users/${id}/block`, {
+  //     headers: GetDefaultHeaders(),
+  //     method: 'POST',
+  //   })
+  //   return await refreshUsersTable();
+
+  // }
+
+  // async function unblockUser(id) {
+  //   const response = await fetch(url + `/users/${id}/unblock`, {
+  //     headers: GetDefaultHeaders(),
+  //     method: 'POST'
+  //   })
+  //   return await refreshUsersTable();
+  // }
+
+  // async function makeAdmin(id) {
+  //   const response = await fetch(url + `/users/${id}/grant`, {
+  //     headers: GetDefaultHeaders(),
+  //     method: 'POST'
+  //   })
+  //   return await refreshUsersTable();
+  // }
+
+  // async function makeUser(id) {
+  //   const response = await fetch(url + `/users/${id}/revoke`, {
+  //     headers: GetDefaultHeaders(),
+  //     method: 'POST'
+  //   })
+  //   return await refreshUsersTable();
+  // }
 
 
   async function deleteUser(id) {
-    const response = await fetch(url + `/users/${id}`, {
-      headers: GetDefaultHeaders(),
-      method: 'DELETE',
-    })
+    await deleteUserRequest(id)
     await refreshUsersTable();
   }
 
 
   async function blockUser(id) {
-    const response = await fetch(url + `/users/${id}/block`, {
-      headers: GetDefaultHeaders(),
-      method: 'POST',
-    })
+    await blockUserRequest(id)
     return await refreshUsersTable();
-
   }
 
 
   async function unblockUser(id) {
-    const response = await fetch(url + `/users/${id}/unblock`, {
-      headers: GetDefaultHeaders(),
-      method: 'POST'
-    })
+    await unblockUserRequest(id)
     return await refreshUsersTable();
   }
 
   async function makeAdmin(id) {
-    const response = await fetch(url + `/users/${id}/grant`, {
-      headers: GetDefaultHeaders(),
-      method: 'POST'
-    })
+    await makeAdminRequest(id)
     return await refreshUsersTable();
   }
 
   async function makeUser(id) {
-    const response = await fetch(url + `/users/${id}/revoke`, {
-      headers: GetDefaultHeaders(),
-      method: 'POST'
-    })
+    await makeUserRequest(id)
     return await refreshUsersTable();
   }
 
@@ -160,14 +189,6 @@ export default function AdminPage() {
                   <div className="col-auto ml-50">
                     {renderStatusActions(user)}
                     {renderRoleActions(user)}
-                    {/* <button
-                      type="submit"
-                      className="btn btn-outline-success mx-1"
-                      onClick={() => makeUser(user.id)}
-                    >
-                      <i class="bi bi-person-plus-fill"></i>
-                    </button> */}
-
                     <button
                       type="submit"
                       className="btn btn-outline-danger mx-1"
@@ -177,8 +198,6 @@ export default function AdminPage() {
                     </button>
                   </div>
                 </td>
-                {/* <td>{new Date(user.lastSeen).toLocaleString()}</td> */}
-                {/* <td>{user.state ? "active" : "blocked"}</td> */}
               </tr>
             ))}
           </tbody>

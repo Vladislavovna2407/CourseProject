@@ -1,8 +1,9 @@
 import './registerPage.css'
-import { useState, useContext} from "react"
+import { useState, useContext } from "react"
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userContext"
+import { registerRequest } from '../../../Api/Api';
 
 export default function RegisterPage() {
 
@@ -37,7 +38,7 @@ export default function RegisterPage() {
   //     navigate('/')
   // }
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -54,27 +55,47 @@ export default function RegisterPage() {
       confirmPassword: confirmPassword
     }
 
-    const response = await fetch(url + '/register', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request)
-    })
+    // const response = await fetch(url + '/register', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(request)
+    // })
 
-    if (response.ok) {
-      const user = await response.json();
+    try {
+      const user = await registerRequest(request);
       const encrypted = btoa(request.email + ':' + request.password);
       localStorage.setItem('user', `Basic ${encrypted}`)
       localStorage.setItem('current-user', JSON.stringify(user))
       setUser(user)
       navigate('/templates')
-    } else {
-      const json = await response.json();
-      console.log(json.message)
+    } catch (error) {
+      console.log(error)
+      setError('email', {
+        type: 'manual',
+        message: `The user's email address already exists`,
+      });
     }
-
   }
+
+  // if (response.ok) {
+  //   const user = await response.json();
+  //   const encrypted = btoa(request.email + ':' + request.password);
+  //   localStorage.setItem('user', `Basic ${encrypted}`)
+  //   localStorage.setItem('current-user', JSON.stringify(user))
+  //   setUser(user)
+  //   navigate('/templates')
+  // } else {
+  //   const json = await response.json();
+  //   console.log(json.message)
+  //   setError('email', {
+  //     type: 'manual',
+  //     message: `The user's email address already exists`,
+  //   });
+  // }
+
+
 
   return (
     <div>

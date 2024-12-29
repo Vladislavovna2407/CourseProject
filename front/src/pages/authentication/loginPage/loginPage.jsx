@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import './loginPage.css'
 import { useForm } from "react-hook-form"
 import { UserContext } from "../../../context/userContext"
+import { loginRequest } from "../../../Api/Api"
 
 
 export default function LoginPage() {
@@ -18,7 +19,6 @@ export default function LoginPage() {
 
   const onSubmit = (data) => {
     console.log(data);
-
   };
 
   const navigate = useNavigate();
@@ -26,10 +26,6 @@ export default function LoginPage() {
   function signUp() {
     navigate('/register')
   }
-
-  // function goToAdmin(){
-  //   navigate('/admin')
-  // }
 
   function handleEmail(event) {
     setEmail(event.target.value)
@@ -44,28 +40,37 @@ export default function LoginPage() {
       email: email,
       password: password
     }
-
-    const response = await fetch(url + '/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request)
-    })
-
-    if (response.ok) {
-      const user = await response.json();
+    // const response = await fetch(url + '/login', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(request)
+    // })
+    try {
+      const user = await loginRequest(request);
       const encrypted = btoa(request.email + ':' + request.password);
       localStorage.setItem('user', `Basic ${encrypted}`)
       localStorage.setItem('current-user', JSON.stringify(user))
       setUser(user)
       navigate('/templates')
-    } else {
-      const json = await response.json();
-      console.log(json.message)
+    } catch (error) {
+      console.log(error)
     }
 
+    // if (response.ok) {
+    //   const user = await response.json();
+    //   const encrypted = btoa(request.email + ':' + request.password);
+    //   localStorage.setItem('user', `Basic ${encrypted}`)
+    //   localStorage.setItem('current-user', JSON.stringify(user))
+    //   setUser(user)
+    //   navigate('/templates')
+    // } else {
+    //   const json = await response.json();
+    //   console.log(json.message)
+    // }
   }
+
 
   return (
     <div>
