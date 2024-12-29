@@ -3,7 +3,7 @@ import { param, body, matchedData, validationResult } from 'express-validator'
 import HttpError from '../utils/httpError.js';
 import asyncUtil from '../utils/asyncUtil.js';
 import TemplateService from '../services/templateService.js';
-import { basicAuth } from '../utils/basicAuth.js'
+import { basicAuth, optionalBasicAuth } from '../utils/basicAuth.js'
 
 function ensureRequestIsValid(req) {
   const validationErrors = validationResult(req);
@@ -16,8 +16,9 @@ const router = express.Router();
 
 router.get(
   '/',
+  optionalBasicAuth,
   asyncUtil(async function (req, res) {
-    const templates = await TemplateService.getAllTemplates();
+    const templates = await TemplateService.getAllTemplates(req.user?.id);
     res.json(templates)
   })
 )

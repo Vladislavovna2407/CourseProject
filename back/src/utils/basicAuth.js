@@ -34,3 +34,38 @@ export async function basicAuth(req, res, next) {
 
   next();
 }
+
+export async function optionalBasicAuth(req, res, next){
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return next();
+  }
+
+  let email = null;
+  let password = null;
+  try {
+    const auth = new Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+    email = auth[0];
+    password = auth[1];
+  }
+  catch (error) {
+    return next();
+  }
+
+  if (!email || !password) {
+    return next();
+  }
+
+  const user = await UserService.findUser({ email, password });
+  if (!user) {
+    return next();
+  }
+
+  if (!user.isActive) {
+    return next();
+  }
+
+  req.user = user;
+
+  next();
+}

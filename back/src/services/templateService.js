@@ -16,7 +16,8 @@ class TemplateService {
     }
   }
 
-  static getAllTemplates = async () => this.executeSql(async () => {
+  static getAllTemplates = async (userId) => this.executeSql(async () => {
+    userId = userId || 0;
     const response = await sql`
       SELECT 
           template.template_id AS "templateId",
@@ -28,7 +29,7 @@ class TemplateService {
           ans.answer_id as "ownAnswerId"
       FROM template
       INNER JOIN public.app_user app_user ON template.author_id = app_user.app_user_id
-      LEFT JOIN public.answer ans ON template.template_id = ans.template_id`
+      LEFT JOIN public.answer ans ON template.template_id = ans.template_id AND app_user.app_user_id = ${userId}`
 
     return response
   });
