@@ -14,36 +14,28 @@ const creatorOptions = {
   showLogicTab: false,
   showJSONEditorTab: false,
   showTranslationTab: false,
-  //questionTypes: ["text", "checkbox", "radiogroup", "boolean"],
+  questionTypes: ["text", "checkbox", "radiogroup", "boolean"],
 };
 
 export default function ConstructorPage() {
   let [creator, setCreator] = useState();
-  // const params = useParams()
-
-  // const templateId = params.id;
-  // console.log(`TemplateId: ${templateId}`)
-
 
   if (creator === undefined) {
 
     creator = new SurveyCreator(creatorOptions);
     creator.toolbox.forceCompact = true;
-    // creator.toolbox.changeCategories([
-    //   { name: "text", category: "Panels" },
-    //   { name: "checkbox", category: "Panels" },
-    //   { name: "radiogroup", category: "Panels" },
-    //   { name: "boolean", category: "Panels" },
-    // ]);
+    creator.pageEditMode = 'bypage';
+    creator.toolbox.changeCategories([
+      { name: "text", category: "Panels" },
+      { name: "checkbox", category: "Panels" },
+      { name: "radiogroup", category: "Panels" },
+      { name: "boolean", category: "Panels" },
+    ]);
 
     creator.saveSurveyFunc = async (no, callback) => {
       await createTemplate(creator.JSON);
       callback(no, true);
     };
-
-    // getTemplate(templateId).then(template => {
-    //   creator.JSON = template;
-    // });
 
     setCreator(creator);
   }

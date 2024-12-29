@@ -16,6 +16,7 @@ const creatorOptions = {
   showLogicTab: false,
   showJSONEditorTab: false,
   showTranslationTab: false,
+  questionTypes: ["text", "checkbox", "radiogroup", "boolean"],
 };
 
 export default function EditTemplatePage() {
@@ -29,6 +30,13 @@ export default function EditTemplatePage() {
 
     creator = new SurveyCreator(creatorOptions);
     creator.toolbox.forceCompact = true;
+    creator.pageEditMode = 'bypage';
+    creator.toolbox.changeCategories([
+      { name: "text", category: "Panels" },
+      { name: "checkbox", category: "Panels" },
+      { name: "radiogroup", category: "Panels" },
+      { name: "boolean", category: "Panels" },
+    ]);
 
     creator.saveSurveyFunc = async (no, callback) => {
       await updateTemplate(templateId, creator.JSON);
