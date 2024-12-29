@@ -13,14 +13,14 @@ CREATE TABLE template (
     template_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
-    author_id INTEGER NOT NULL,
+    author_id INTEGER NOT NULL REFERENCES public.app_user(app_user_id) ON DELETE CASCADE,
     raw JSON NOT NULL
 );
 
 CREATE TABLE answer (
     answer_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    template_id INTEGER NOT NULL,
-    responder_id INTEGER NOT NULL,
+    template_id INTEGER NOT NULL REFERENCES public.template(template_id) ON DELETE CASCADE,
+    responder_id INTEGER NOT NULL REFERENCES public.app_user(app_user_id) ON DELETE CASCADE,
     raw JSON NOT NULL
 );
 

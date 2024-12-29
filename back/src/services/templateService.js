@@ -18,9 +18,17 @@ class TemplateService {
 
   static getAllTemplates = async () => this.executeSql(async () => {
     const response = await sql`
-      select template_id as "templateId", title, description, author_id as "authorId", app_user.name as "authorName"  
-      from template
-      inner join public.app_user app_user on template.author_id = app_user.app_user_id`
+      SELECT 
+          template.template_id AS "templateId",
+          title,
+          description,
+          author_id AS "authorId",
+          app_user.name AS "authorName",
+          (SELECT count(*) FROM answer WHERE answer.template_id = template.template_id) AS "answerCount",
+          ans.answer_id as "ownAnswerId"
+      FROM template
+      INNER JOIN public.app_user app_user ON template.author_id = app_user.app_user_id
+      LEFT JOIN public.answer ans ON template.template_id = ans.template_id`
 
     return response
   });

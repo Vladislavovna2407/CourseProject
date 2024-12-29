@@ -50,6 +50,19 @@ export async function getTemplate(id) {
   throw Error("Failed to getTemplate().");
 }
 
+export async function deleteTemplate(id){
+  const response = await fetch(API_URL + '/templates/' + id, {
+    method: "DELETE",
+    headers: GetDefaultHeaders()
+  })
+
+  if (response.ok) {
+    return;
+  }
+
+  throw Error("Failed to deleteTemplate().");
+}
+
 export async function saveResponse(templateId, model) {
   const response = await fetch(API_URL + '/templates/' + templateId + '/answers', {
     method: "POST",
