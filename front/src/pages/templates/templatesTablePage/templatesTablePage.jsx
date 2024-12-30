@@ -31,33 +31,23 @@ export default function TemplatesTablePage() {
   }, []);
 
 
-  // function renderForUnauthorizedUser(){
-  //   if(user.isAdmin) {
-  //     return(
-  //       <div>
-
-  //       </div>
-  //     )
-  //   }
-  // }
-
   function renderMyAnswers(template) {
     if (template.ownAnswerId) {
       return (
-        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/answers/${template.ownAnswerId}`}><i class="bi bi-eye"></i></a>
+        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/answers/${template.ownAnswerId}`}><i className="bi bi-eye"></i></a>
       )
     }
 
     return (
-      <a className='links btn btn-outline-dark mx-1 color-dark' href={`/templates/${template.templateId}/answers`}><i class="bi bi-pen"></i></a>
+      <a className='links btn btn-outline-dark mx-1 color-dark' href={`/templates/${template.templateId}/answers`}><i className="bi bi-pen"></i></a>
     )
   }
 
   function renderActions(template) {
     return (
       <Fragment>
-        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i class="bi bi-eye"></i></a>
-        <a className='links btn btn-outline-success mx-1 color-green' href={`/templates/${template.templateId}/edit`}><i class="bi bi-pencil"></i> </a>
+        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i className="bi bi-eye"></i></a>
+        <a className='links btn btn-outline-success mx-1 color-green' href={`/templates/${template.templateId}/edit`}><i className="bi bi-pencil"></i> </a>
         <a className='links btn btn-outline-danger mx-1 color-red' href='' onClick={() => { removeTemplate(template.templateId) }}><i className="bi bi-trash"></i></a>
       </Fragment>
     )
@@ -83,11 +73,10 @@ function renderForUnauthorizedUser(templates) {
             {templates.map((template) => (
               <tr key={template.templateId}>
                 <th scope="row"></th>
-                {/* <td><a className='links' href={`/templates/${template.templateId}`}>{template.title}</a></td> */}
                 <td>{template.title}</td>
                 <td>{template.answerCount}</td>
                 <td>{template.authorName}</td>
-                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i class="bi bi-eye"></i></a></td>
+                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i className="bi bi-eye"></i></a></td>
               </tr>
             ))}
           </tbody>

@@ -5,6 +5,7 @@ import { Survey } from 'survey-react-ui';
 import { getTemplate, saveResponse } from '../../../Api/Api.js'
 import Header from "../../../Components/header/header.jsx";
 
+
 export default function CreateAnswerPage() {
   const [template, setTemplate] = useState(null);
   const params = useParams()
@@ -22,8 +23,6 @@ export default function CreateAnswerPage() {
   survey.completedHtml = "Thank you for filling out our form"
 
   const surveyComplete = (survey) => {
-    //survey.setValue("userId", 'user-not-set-yet')
-
     saveResponse(templateId, survey.data);
   };
 

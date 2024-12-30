@@ -54,32 +54,6 @@ export async function makeUserRequest(id) {
     })
 }
 
-// export async function registerRequest() {
-//     const request = {
-//         email: email,
-//         password: password
-//     }
-//     const response = await fetch(API_URL + '/login', {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(request)
-//     })
-//     if (response.ok) {
-//         const user = await response.json();
-//         const encrypted = btoa(request.email + ':' + request.password);
-//         localStorage.setItem('user', `Basic ${encrypted}`)
-//         localStorage.setItem('current-user', JSON.stringify(user))
-//         setUser(user)
-//         navigate('/templates')
-//     } else {
-//         const json = await response.json();
-//         console.log(json.message)
-//     }
-// }
-
-
 export async function loginRequest(request) {
     const response = await fetch(API_URL + '/login', {
         method: "POST",
@@ -191,7 +165,6 @@ export async function saveResponse(templateId, model) {
 
     throw Error("Failed to saveResponse().");
 }
-
 
 export async function getAnswer(templateId, answerId) {
     const response = await fetch(API_URL + `/templates/${templateId}/answers/${answerId}`, {

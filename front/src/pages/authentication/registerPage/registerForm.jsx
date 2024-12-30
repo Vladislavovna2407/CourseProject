@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userContext"
 import { registerRequest } from '../../../Api/Api';
 
-export default function RegisterPage() {
 
-  let url = "http://localhost:3001";
+export default function RegisterPage() {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -34,18 +33,12 @@ export default function RegisterPage() {
 
   const navigate = useNavigate();
 
-  // function goToMain() {
-  //     navigate('/')
-  // }
-
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
     signUpHandler();
   };
-
-  // const password = watch('password');
 
   async function signUpHandler() {
     const request = {
@@ -54,14 +47,6 @@ export default function RegisterPage() {
       password: password,
       confirmPassword: confirmPassword
     }
-
-    // const response = await fetch(url + '/register', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(request)
-    // })
 
     try {
       const user = await registerRequest(request);
@@ -78,23 +63,6 @@ export default function RegisterPage() {
       });
     }
   }
-
-  // if (response.ok) {
-  //   const user = await response.json();
-  //   const encrypted = btoa(request.email + ':' + request.password);
-  //   localStorage.setItem('user', `Basic ${encrypted}`)
-  //   localStorage.setItem('current-user', JSON.stringify(user))
-  //   setUser(user)
-  //   navigate('/templates')
-  // } else {
-  //   const json = await response.json();
-  //   console.log(json.message)
-  //   setError('email', {
-  //     type: 'manual',
-  //     message: `The user's email address already exists`,
-  //   });
-  // }
-
 
 
   return (
@@ -139,7 +107,6 @@ export default function RegisterPage() {
                   className="form-control size"
                   id="inputEmail"
                   placeholder="E-mail"
-                  // value={email}
                   onChange={handleEmail}
                 />
                 {errors?.email && <p className="validation">{errors.email.message}</p>}
@@ -161,7 +128,6 @@ export default function RegisterPage() {
                   className="form-control size"
                   id="inputPassword"
                   placeholder="Password"
-                  // value={password}
                   onChange={handlePassword}
                 />
                 {errors?.password && <p className="validation">{errors.password.message}</p>}
@@ -181,7 +147,6 @@ export default function RegisterPage() {
                   className="form-control size"
                   id="inputConfirmPassword"
                   placeholder="Confirm password"
-                  // value={confirmPassword}
                   onChange={handleConfirmPassword}
                 />
                 {errors.confirmPassword && <p className="validation">{errors.confirmPassword.message}</p>}
@@ -190,7 +155,6 @@ export default function RegisterPage() {
                 <button
                   type="submit"
                   className="btn btn-primary mb-3 w-100"
-                // onClick={goToMain}
                 >
                   Register
                 </button>

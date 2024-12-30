@@ -33,7 +33,6 @@ export default function Header() {
         onClick: () => {
           localStorage.removeItem('user')
           localStorage.removeItem('current-user')
-          // navigate('/login')
           navigate('/')
           window.location.reload();
         }
@@ -42,7 +41,7 @@ export default function Header() {
     buttons.push(
       {
         text: 'Log in',
-        onClick: () => navigate("/login") // TODO: clean up localStorage
+        onClick: () => navigate("/login") 
       },
     )
   }

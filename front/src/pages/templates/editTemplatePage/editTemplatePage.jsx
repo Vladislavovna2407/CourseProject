@@ -8,6 +8,7 @@ import "survey-creator-core/survey-creator-core.min.css";
 import { updateTemplate, getTemplate } from '../../../Api/Api.js'
 import Header from "../../../Components/header/header";
 
+
 const creatorOptions = {
   showLogicTab: true,
   isAutoSave: false,

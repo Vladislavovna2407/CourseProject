@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { getTemplate, getAnswers, deleteAnswer } from '../../../Api/Api.js'
 import Header from "../../../Components/header/header"
 
+
 export default function AnswerList() {
   let [template, setTemplate] = useState({});
   let [answers, setAnswers] = useState([]);
@@ -48,7 +49,7 @@ export default function AnswerList() {
   function renderActions(answer) {
     return (
       <Fragment>
-        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${templateId}/answers/${answer.answerId}`}><i class="bi bi-eye"></i></a>
+        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${templateId}/answers/${answer.answerId}`}><i className="bi bi-eye"></i></a>
         <a className='links btn btn-outline-danger mx-1 color-red' href='' onClick={() => { removeAnswer(answer.answerId) }}><i className="bi bi-trash"></i></a>
       </Fragment>
     )

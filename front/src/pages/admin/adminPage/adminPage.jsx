@@ -5,85 +5,21 @@ import Header from '../../../Components/header/header';
 import { getAllUsers, deleteUserRequest, blockUserRequest, unblockUserRequest, makeAdminRequest, makeUserRequest } from '../../../Api/Api';
 
 
-
 export default function AdminPage() {
   const authKeyName = 'user';
   const url = "http://localhost:3001";
 
   const [data, setData] = useState([]);
 
-  // function GetDefaultHeaders() {
-  //   return {
-  //     "Content-Type": "application/json",
-  //     Authorization: localStorage.getItem(authKeyName),
-  //   };
-  // }
-
-
-  // async function getAllUsers() {
-  //   const response = await fetch(url + '/users/', {
-  //     headers: GetDefaultHeaders(),
-  //   })
-  //   if (response.ok) {
-  //     return await response.json();
-  //   }
-  //   throw Error("Failed to getAllUsers().");
-  // }
-
-
-  // async function deleteUser(id) {
-  //   const response = await fetch(url + `/users/${id}`, {
-  //     headers: GetDefaultHeaders(),
-  //     method: 'DELETE',
-  //   })
-  //   await refreshUsersTable();
-  // }
-
-  // async function blockUser(id) {
-  //   const response = await fetch(url + `/users/${id}/block`, {
-  //     headers: GetDefaultHeaders(),
-  //     method: 'POST',
-  //   })
-  //   return await refreshUsersTable();
-
-  // }
-
-  // async function unblockUser(id) {
-  //   const response = await fetch(url + `/users/${id}/unblock`, {
-  //     headers: GetDefaultHeaders(),
-  //     method: 'POST'
-  //   })
-  //   return await refreshUsersTable();
-  // }
-
-  // async function makeAdmin(id) {
-  //   const response = await fetch(url + `/users/${id}/grant`, {
-  //     headers: GetDefaultHeaders(),
-  //     method: 'POST'
-  //   })
-  //   return await refreshUsersTable();
-  // }
-
-  // async function makeUser(id) {
-  //   const response = await fetch(url + `/users/${id}/revoke`, {
-  //     headers: GetDefaultHeaders(),
-  //     method: 'POST'
-  //   })
-  //   return await refreshUsersTable();
-  // }
-
-
   async function deleteUser(id) {
     await deleteUserRequest(id)
     await refreshUsersTable();
   }
 
-
   async function blockUser(id) {
     await blockUserRequest(id)
     return await refreshUsersTable();
   }
-
 
   async function unblockUser(id) {
     await unblockUserRequest(id)
