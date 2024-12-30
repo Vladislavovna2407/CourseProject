@@ -19,6 +19,7 @@ export default function CreateAnswerPage() {
   }, []);
 
   const survey = new Model(template);
+  survey.completedHtml = "Thank you for filling out our form"
 
   const surveyComplete = (survey) => {
     //survey.setValue("userId", 'user-not-set-yet')

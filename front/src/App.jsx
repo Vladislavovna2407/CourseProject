@@ -9,6 +9,7 @@ import ConstructorPage from './pages/templates/constructorPage/constructorPage'
 import AdminPage from './pages/admin/adminPage/adminPage'
 import EditTemplatePage from './pages/templates/editTemplatePage/editTemplatePage';
 import ViewAnswerPage from './pages/answers/viewAnswerPage/viewAnswerPage';
+import AnswerList from './pages/answers/answerList/answerList';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,12 @@ const router = createBrowserRouter([
   {
     path: '/templates/:templateId/answers/:answerId',
     element: <ViewAnswerPage />,
+  },
+  {
+    path: '/answerlist',
+    element: <AnswerList/>
   }
+
 ])
 
 function App() {
