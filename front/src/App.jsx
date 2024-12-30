@@ -8,6 +8,7 @@ import CreateAnswerPage from './pages/answers/answerPage/answerPage';
 import ConstructorPage from './pages/templates/constructorPage/constructorPage'
 import AdminPage from './pages/admin/adminPage/adminPage'
 import EditTemplatePage from './pages/templates/editTemplatePage/editTemplatePage';
+import ViewTemplatePage from './pages/templates/viewTemplatePage/viewTemplatePage';
 import ViewAnswerPage from './pages/answers/viewAnswerPage/viewAnswerPage';
 import AnswerList from './pages/answers/answerList/answerList';
 
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     // loader: async () => redirect('/templates')
-    element: <TemplatesTablePage/>
+    element: <TemplatesTablePage />
   },
   {
     path: '/login',
@@ -52,17 +53,15 @@ const router = createBrowserRouter([
   {
     path: '/templates/:templateId',
     element: <AnswerList />
+  },
+  {
+    path: '/templates/:templateId/view',
+    element: <ViewTemplatePage />
   }
 ])
 
 function App() {
   return (
-    // <div className="App">
-    //   {/* <RegisterForm /> */}
-    //   <AuthorizationForm />
-
-    // </div>
-
     <RouterProvider router={router} />
   );
 }
