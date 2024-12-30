@@ -14,7 +14,8 @@ import AnswerList from './pages/answers/answerList/answerList';
 const router = createBrowserRouter([
   {
     path: '/',
-    loader: async () => redirect('/templates')
+    // loader: async () => redirect('/templates')
+    element: <TemplatesTablePage/>
   },
   {
     path: '/login',
@@ -28,10 +29,10 @@ const router = createBrowserRouter([
     path: '/admin',
     element: <AdminPage />,
   },
-  {
-    path: '/templates',
-    element: <TemplatesTablePage />,
-  },
+  // {
+  //   path: '/templates',
+  //   element: <TemplatesTablePage />,
+  // },
   {
     path: '/templates/create',
     element: <ConstructorPage />,

@@ -13,8 +13,6 @@ export default function LoginPage() {
 
   const { setUser } = useContext(UserContext);
 
-  let url = "http://localhost:3001";
-
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
@@ -40,13 +38,7 @@ export default function LoginPage() {
       email: email,
       password: password
     }
-    // const response = await fetch(url + '/login', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(request)
-    // })
+   
     try {
       const user = await loginRequest(request);
       const encrypted = btoa(request.email + ':' + request.password);
@@ -58,17 +50,6 @@ export default function LoginPage() {
       console.log(error)
     }
 
-    // if (response.ok) {
-    //   const user = await response.json();
-    //   const encrypted = btoa(request.email + ':' + request.password);
-    //   localStorage.setItem('user', `Basic ${encrypted}`)
-    //   localStorage.setItem('current-user', JSON.stringify(user))
-    //   setUser(user)
-    //   navigate('/templates')
-    // } else {
-    //   const json = await response.json();
-    //   console.log(json.message)
-    // }
   }
 
 
@@ -93,7 +74,6 @@ export default function LoginPage() {
                   className="form-control size"
                   id="staticEmail2"
                   placeholder="E-mail"
-                  // value={email}
                   onChange={handleEmail}
                 />
                 <label htmlFor="staticEmail2" className="visually-hidden">
@@ -115,7 +95,6 @@ export default function LoginPage() {
                   className="form-control size"
                   id="inputPassword2"
                   placeholder="Password"
-                  // value={password}
                   onChange={handlePassword}
                 />
                 <label htmlFor="inputPassword2" className="visually-hidden">

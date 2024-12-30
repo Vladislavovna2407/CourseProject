@@ -57,16 +57,16 @@ export default function AnswerList() {
   return (
     <div>
       <Header />
-      <div>Template: {template.title}</div>
-      <div>Description: {template.description}</div>
       <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
-          <caption className="caption">List of responders</caption>
+          <caption className="caption">List of answers</caption>
           <thead className='thead-light' >
             <tr>
               <th scope="col"></th>
               <th scope="col">Responder</th>
               <th scope="col">Actions</th>
+              <th>Template</th>
+              <th>Description</th>
             </tr>
           </thead>
           <tbody>
@@ -75,6 +75,8 @@ export default function AnswerList() {
                 <th scope="row"></th>
                 <td>{answer.responderName}</td>
                 <td>{renderActions(answer)}</td>
+                 <td>{template.title}</td>
+                 <td>{template.description}</td>
               </tr>
             ))}
           </tbody>
