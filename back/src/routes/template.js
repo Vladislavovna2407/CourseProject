@@ -18,7 +18,7 @@ router.get(
     '/',
     optionalBasicAuth,
     asyncUtil(async function (req, res) {
-        console.log(`userid = ${req.user.id}`)
+        req.user = req.user || {};
         const templates = await TemplateService.getAllTemplates(req.user.id);
         res.json(templates)
     })
