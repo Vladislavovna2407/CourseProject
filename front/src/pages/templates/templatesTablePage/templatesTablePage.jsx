@@ -87,7 +87,7 @@ function renderForUnauthorizedUser(templates) {
                 <td>{template.title}</td>
                 <td>{template.answerCount}</td>
                 <td>{template.authorName}</td>
-                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href=''><i class="bi bi-eye"></i></a></td>
+                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i class="bi bi-eye"></i></a></td>
               </tr>
             ))}
           </tbody>

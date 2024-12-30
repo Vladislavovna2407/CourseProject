@@ -15,7 +15,6 @@ import AnswerList from './pages/answers/answerList/answerList';
 const router = createBrowserRouter([
   {
     path: '/',
-    // loader: async () => redirect('/templates')
     element: <TemplatesTablePage />
   },
   {
