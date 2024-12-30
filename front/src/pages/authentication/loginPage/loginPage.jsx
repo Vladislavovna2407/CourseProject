@@ -10,6 +10,7 @@ import { loginRequest } from "../../../Api/Api"
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('')
 
   const { setUser } = useContext(UserContext);
 
@@ -47,9 +48,9 @@ export default function LoginPage() {
       setUser(user)
       navigate('/templates')
     } catch (error) {
+      setAuthError( 'Invalid login or password');
       console.log(error)
     }
-
   }
 
 
@@ -101,6 +102,7 @@ export default function LoginPage() {
                   Password
                 </label>
                 {errors?.password && <p className="validation">{errors.password.message}</p>}
+                {authError && <p style={{ color: 'red' }}>{authError}</p>}
               </div>
               <div className="mb-3">
                 <button

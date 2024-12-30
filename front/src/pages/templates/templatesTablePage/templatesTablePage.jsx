@@ -1,10 +1,12 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import './templatesTablePage.css'
 import Header from '../../../Components/header/header';
 import { getAllTemplates, deleteTemplate } from '../../../Api/Api.js'
+import { UserContext } from '../../../context/userContext';
 
 export default function TemplatesTablePage() {
   let [templates, setTemplates] = useState([]);
+  const {user} = useContext(UserContext)
 
   async function refreshTemplatesTable() {
     try {
@@ -28,6 +30,17 @@ export default function TemplatesTablePage() {
     refresh().catch(console.error);
   }, []);
 
+
+  // function renderForUnauthorizedUser(){
+  //   if(user.isAdmin) {
+  //     return(
+  //       <div>
+
+  //       </div>
+  //     )
+  //   }
+  // }
+
   function renderMyAnswers(template) {
     if (template.ownAnswerId) {
       return (
@@ -36,7 +49,7 @@ export default function TemplatesTablePage() {
     }
 
     return (
-      <a className='links btn btn-outline-dark mx-1 color-dark' href={`/templates/${template.templateId}/answers`}><i class="bi bi-card-list"></i></a>
+      <a className='links btn btn-outline-dark mx-1 color-dark' href={`/templates/${template.templateId}/answers`}><i class="bi bi-pen"></i></a>
     )
   }
 
@@ -50,10 +63,44 @@ export default function TemplatesTablePage() {
     )
   }
 
-  return (
+function renderForUnauthorizedUser(templates) {
+  
+  return(
     <Fragment>
-      <Header />
-      <div className="container position">
+        <div className="container position">
+        <table className="table table-secondary table-hover table-striped ">
+          <caption className="caption">List of templates</caption>
+          <thead className='thead-light' >
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name of template</th>
+              <th scope="col">Replies</th>
+              <th scope="col">The author</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {templates.map((template) => (
+              <tr key={template.templateId}>
+                <th scope="row"></th>
+                {/* <td><a className='links' href={`/templates/${template.templateId}`}>{template.title}</a></td> */}
+                <td>{template.title}</td>
+                <td>{template.answerCount}</td>
+                <td>{template.authorName}</td>
+                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href=''><i class="bi bi-eye"></i></a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Fragment>
+  )
+   
+}
+
+function renderForAuthorizedUser(templates) {
+  return(
+  <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
           <caption className="caption">List of templates</caption>
           <thead className='thead-light' >
@@ -81,6 +128,14 @@ export default function TemplatesTablePage() {
           </tbody>
         </table>
       </div>
+  )
+}
+
+
+  return (
+    <Fragment>
+      <Header />
+      {user ? renderForAuthorizedUser(templates)  :renderForUnauthorizedUser(templates) }
     </Fragment>
   )
 }

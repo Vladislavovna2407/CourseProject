@@ -33,7 +33,9 @@ export default function Header() {
         onClick: () => {
           localStorage.removeItem('user')
           localStorage.removeItem('current-user')
-          navigate('/login')
+          // navigate('/login')
+          navigate('/')
+          window.location.reload();
         }
       })
   } else {
