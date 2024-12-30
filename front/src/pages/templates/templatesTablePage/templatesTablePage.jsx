@@ -43,7 +43,7 @@ export default function TemplatesTablePage() {
   function renderActions(template) {
     return (
       <Fragment>
-        <a className='links btn btn-outline-primary mx-1 color-blue' href=''><i class="bi bi-eye"></i></a>
+        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i class="bi bi-eye"></i></a>
         <a className='links btn btn-outline-success mx-1 color-green' href={`/templates/${template.templateId}/edit`}><i class="bi bi-pencil"></i> </a>
         <a className='links btn btn-outline-danger mx-1 color-red' href='' onClick={() => { removeTemplate(template.templateId) }}><i className="bi bi-trash"></i></a>
       </Fragment>
