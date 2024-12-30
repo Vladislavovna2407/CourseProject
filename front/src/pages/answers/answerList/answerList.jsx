@@ -1,48 +1,85 @@
+import { Fragment, useState, useEffect } from "react";
+import { useParams } from "react-router"
+import { useNavigate } from 'react-router-dom'
+import { getTemplate, getAnswers, deleteAnswer } from '../../../Api/Api.js'
 import Header from "../../../Components/header/header"
 
+export default function AnswerList() {
+  let [template, setTemplate] = useState({});
+  let [answers, setAnswers] = useState([]);
+  const params = useParams()
+  const navigate = useNavigate();
 
-export default function AnswerList (){
+  const templateId = params.templateId;
 
-    let mok = [{
-        name: 'first',
-        answe: 'ira',
-        id: 1
-    },
-    { name: 'first',
-    answe: 'ira',
-    id:2,
-},
-{name: 'first',
-answe: 'ira',
-id:3,
-}
-    ]
-    
-    return(
-        <div>
-             <Header />
-       <div className="container position">
+  useEffect(() => {
+    loadTemplate(templateId).then(() => {
+      loadAnswers(templateId);
+    })
+  }, []);
+
+  async function loadTemplate(id) {
+    try {
+      const templ = await getTemplate(id);
+      setTemplate(templ);
+    } catch (error) {
+      console.log(error);
+      navigate('/not-found')
+    }
+  }
+
+  async function loadAnswers(id) {
+    try {
+      const answers = await getAnswers(id);
+      setAnswers(answers);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function removeAnswer(id) {
+    try {
+      await deleteAnswer(templateId, id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function renderActions(answer) {
+    return (
+      <Fragment>
+        <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${templateId}/answers/${answer.answerId}`}><i class="bi bi-eye"></i></a>
+        <a className='links btn btn-outline-danger mx-1 color-red' href='' onClick={() => { removeAnswer(answer.answerId) }}><i className="bi bi-trash"></i></a>
+      </Fragment>
+    )
+  }
+
+  return (
+    <div>
+      <Header />
+      <div>Template: {template.title}</div>
+      <div>Description: {template.description}</div>
+      <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
           <caption className="caption">List of responders</caption>
           <thead className='thead-light' >
             <tr>
-              <th scope="col">
-              </th>
-              <th scope="col">Name of template</th>
-              <th scope="col">Responders</th>
+              <th scope="col"></th>
+              <th scope="col">Responder</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {mok.map((responder) => (
-              <tr key={responder.id}>
+            {answers.map((answer) => (
+              <tr key={answer.answerId}>
                 <th scope="row"></th>
-                <td>{responder.name}</td>
-                <td>{responder.answe}</td>
+                <td>{answer.responderName}</td>
+                <td>{renderActions(answer)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-        </div>
-    )
+    </div>
+  )
 }

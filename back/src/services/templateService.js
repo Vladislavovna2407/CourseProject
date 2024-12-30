@@ -19,26 +19,26 @@ class TemplateService {
     static getAllTemplates = async (userId) => this.executeSql(async () => {
         userId = userId || 0;
         const response = await sql`
-      SELECT 
-          template.template_id AS "templateId",
-          title,
-          description,
-          author_id AS "authorId",
-          app_user.name AS "authorName",
-          (SELECT count(*) FROM answer WHERE answer.template_id = template.template_id) AS "answerCount",
-          ans.answer_id as "ownAnswerId"
-      FROM template
-      INNER JOIN public.app_user app_user ON template.author_id = app_user.app_user_id
-      LEFT JOIN public.answer ans ON template.template_id = ans.template_id AND ans.responder_id = ${userId}`
+            SELECT 
+                template.template_id AS "templateId",
+                title,
+                description,
+                author_id AS "authorId",
+                app_user.name AS "authorName",
+                (SELECT count(*) FROM answer WHERE answer.template_id = template.template_id) AS "answerCount",
+                ans.answer_id as "ownAnswerId"
+            FROM template
+            INNER JOIN public.app_user app_user ON template.author_id = app_user.app_user_id
+            LEFT JOIN public.answer ans ON template.template_id = ans.template_id AND ans.responder_id = ${userId}`
 
         return response
     });
 
     static getTemplate = async (id) => this.executeSql(async () => {
         const response = await sql`
-      select template_id as "templateId", raw
-      from template
-      where template_id = ${id}`;
+            SELECT template_id AS "templateId", raw
+            FROM template
+            WHERE template_id = ${id}`;
 
         if (response.count == 0) return null;
 
@@ -47,37 +47,37 @@ class TemplateService {
 
     static createTemplate = async ({ title, description, authorId, raw }) => this.executeSql(async () => {
         await sql`
-    insert into template(title, description, author_id, raw)
-    values (${title}, ${description}, ${authorId}, ${raw})`
+            INSERT INTO template(title, description, author_id, raw)
+            VALUES (${title}, ${description}, ${authorId}, ${raw})`
     });
 
     static updateTemplate = async (id, { title, description, raw }) => this.executeSql(async () => {
         await sql`
-    UPDATE template
-    SET title = ${title},
-        description = ${description},
-        raw = ${raw}
-    WHERE template_id = ${id}`;
+            UPDATE template
+            SET title = ${title},
+                description = ${description},
+                raw = ${raw}
+            WHERE template_id = ${id}`;
     });
 
     static deleteTemplate = async (id) => this.executeSql(async () => {
         await sql`
-    DELETE 
-    FROM public.template
-    WHERE template_id = ${id}`;
+            DELETE 
+            FROM public.template
+            WHERE template_id = ${id}`;
     });
 
     static createAnswer = async (templateId, responderId, raw) => this.executeSql(async () => {
         await sql`
-    INSERT INTO answer (template_id, responder_id, raw)
-    VALUES (${templateId}, ${responderId}, ${raw})`
+            INSERT INTO answer (template_id, responder_id, raw)
+            VALUES (${templateId}, ${responderId}, ${raw})`
     });
 
     static getAswer = async (templateId, answerId) => this.executeSql(async () => {
         const response = await sql`
-      SELECT answer_id as "answerId", raw
-      FROM answer
-      WHERE template_id = ${templateId} AND answer_id = ${answerId}`;
+            SELECT answer_id as "answerId", answer.responder_id as "responderId", raw
+            FROM answer
+            WHERE template_id = ${templateId} AND answer_id = ${answerId}`;
 
         if (response.count == 0) return null;
 
@@ -86,13 +86,20 @@ class TemplateService {
 
     static getAllAnswers = async (templateId) => this.executeSql(async () => {
         const response = await sql`
-      SELECT answer.answer_id as "answerId", answer.responder_id as "responderId", u.name as "responderName"
-      FROM answer
-      INNER JOIN public.template t on answer.template_id = t.template_id
-      INNER JOIN public.app_user u on answer.responder_id = u.app_user_id
-      WHERE t.template_id = ${templateId}`
+            SELECT answer.answer_id as "answerId", answer.responder_id as "responderId", u.name as "responderName"
+            FROM answer
+            INNER JOIN public.template t on answer.template_id = t.template_id
+            INNER JOIN public.app_user u on answer.responder_id = u.app_user_id
+            WHERE t.template_id = ${templateId}`
 
         return response
+    });
+
+    static deleteAnswer = async (id) => this.executeSql(async () => {
+        await sql`
+            DELETE 
+            FROM public.answer
+            WHERE answer_id = ${id}`;
     });
 }
 

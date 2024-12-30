@@ -114,8 +114,6 @@ export async function registerRequest(request) {
     }
 }
 
-
-
 export async function createTemplate(payload) {
     const response = await fetch(API_URL + '/templates/', {
         method: "POST",
@@ -207,4 +205,30 @@ export async function getAnswer(templateId, answerId) {
 
     throw Error("Failed to getAnswer().");
 
+}
+
+export async function getAnswers(templateId) {
+    const response = await fetch(API_URL + `/templates/${templateId}/answers`, {
+        method: "GET",
+        headers: getDefaultHeaders()
+    })
+
+    if (response.ok) {
+        return response.json();
+    }
+
+    throw Error("Failed to getAnswer().");
+}
+
+export async function deleteAnswer(templateId, answerId) {
+    const response = await fetch(API_URL + `/templates/${templateId}/answers/${answerId}`, {
+        method: "DELETE",
+        headers: getDefaultHeaders()
+    })
+
+    if (response.ok) {
+        return;
+    }
+
+    throw Error("Failed to deleteAnswer().");
 }

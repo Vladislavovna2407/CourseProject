@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     element: <ConstructorPage />,
   },
   {
-    path: '/templates/:templateId',
+    path: '/templates/:templateId/edit',
     element: <EditTemplatePage />,
   },
   {
@@ -49,10 +49,9 @@ const router = createBrowserRouter([
     element: <ViewAnswerPage />,
   },
   {
-    path: '/answerlist',
-    element: <AnswerList/>
+    path: '/templates/:templateId',
+    element: <AnswerList />
   }
-
 ])
 
 function App() {

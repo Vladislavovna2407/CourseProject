@@ -17,7 +17,7 @@ const router = express.Router();
 router.get(
     '/',
     optionalBasicAuth,
-    asyncUtil(async function(req, res) {
+    asyncUtil(async function (req, res) {
         console.log(`userid = ${req.user.id}`)
         const templates = await TemplateService.getAllTemplates(req.user.id);
         res.json(templates)
@@ -26,9 +26,9 @@ router.get(
 
 router.get(
     '/:id', [
-        param('id').notEmpty().isInt()
-    ],
-    asyncUtil(async function(req, res) {
+    param('id').notEmpty().isInt()
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         const template = await TemplateService.getTemplate(req.params.id);
@@ -43,9 +43,9 @@ router.get(
 router.delete(
     '/:id',
     basicAuth, [
-        param('id').notEmpty().isInt()
-    ],
-    asyncUtil(async function(req, res) {
+    param('id').notEmpty().isInt()
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req);
 
         const template = await TemplateService.getTemplate(req.params.id);
@@ -65,11 +65,11 @@ router.delete(
 router.post(
     '/',
     basicAuth, [
-        body('title').notEmpty(),
-        body('description').notEmpty(),
-        body('pages').notEmpty()
-    ],
-    asyncUtil(async function(req, res) {
+    body('title').notEmpty(),
+    body('description').notEmpty(),
+    body('pages').notEmpty()
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         const data = matchedData(req)
@@ -85,12 +85,12 @@ router.post(
 router.patch(
     '/:id',
     basicAuth, [
-        param('id').notEmpty().isInt(),
-        body('title').notEmpty(),
-        body('description').notEmpty(),
-        body('pages').notEmpty()
-    ],
-    asyncUtil(async function(req, res) {
+    param('id').notEmpty().isInt(),
+    body('title').notEmpty(),
+    body('description').notEmpty(),
+    body('pages').notEmpty()
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         const template = await TemplateService.getTemplate(req.params.id);
@@ -113,9 +113,9 @@ router.patch(
 router.post(
     '/:templateId/answers',
     basicAuth, [
-        param('templateId').notEmpty().isInt(),
-    ],
-    asyncUtil(async function(req, res) {
+    param('templateId').notEmpty().isInt(),
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         if (!req.body) {
@@ -135,11 +135,12 @@ router.post(
 
 router.get(
     '/:templateId/answers/:answerId',
-    basicAuth, [
+    basicAuth,
+    [
         param('templateId').notEmpty().isInt(),
         param('answerId').notEmpty().isInt(),
     ],
-    asyncUtil(async function(req, res) {
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         const template = await TemplateService.getTemplate(req.params.templateId);
@@ -164,9 +165,9 @@ router.get(
 router.get(
     '/:templateId/answers',
     basicAuth, [
-        param('templateId').notEmpty().isInt(),
-    ],
-    asyncUtil(async function(req, res) {
+    param('templateId').notEmpty().isInt(),
+],
+    asyncUtil(async function (req, res) {
         ensureRequestIsValid(req)
 
         const template = await TemplateService.getTemplate(req.params.templateId);
@@ -177,6 +178,38 @@ router.get(
         if (req.user.isAdmin || template.authorId == req.user.id) {
             const answers = await TemplateService.getAllAnswers(req.params.templateId);
             return res.json(answers)
+        }
+
+        throw new HttpError(403, "The user is not authorized to perform this opeartion")
+    })
+)
+
+router.delete(
+    '/:templateId/answers/:answerId',
+    basicAuth,
+    [
+        param('templateId').notEmpty().isInt(),
+        param('answerId').notEmpty().isInt(),
+    ],
+    asyncUtil(async function (req, res) {
+        ensureRequestIsValid(req)
+
+        const template = await TemplateService.getTemplate(req.params.templateId);
+        if (!template) {
+            throw new HttpError(404, "The template not found")
+        }
+
+        if (req.user.isAdmin || template.authorId == req.user.id) {
+            const answer = await TemplateService.getAswer(template.templateId, req.params.answerId);
+            if (!answer) {
+                throw new HttpError(404, "The answer not found")
+            }
+
+            if (req.user.isAdmin || answer.responderId == req.user.id) {
+                await TemplateService.deleteAnswer(answer.answerId)
+
+                return res.status(204).end();
+            }
         }
 
         throw new HttpError(403, "The user is not authorized to perform this opeartion")
