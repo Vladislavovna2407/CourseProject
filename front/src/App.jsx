@@ -29,10 +29,10 @@ const router = createBrowserRouter([
     path: '/admin',
     element: <AdminPage />,
   },
-  // {
-  //   path: '/templates',
-  //   element: <TemplatesTablePage />,
-  // },
+  {
+    path: '/templates',
+    element: <TemplatesTablePage />,
+  },
   {
     path: '/templates/create',
     element: <ConstructorPage />,
