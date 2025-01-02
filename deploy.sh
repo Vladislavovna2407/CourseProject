@@ -20,9 +20,9 @@ pm2 start --name course-back npm -- start
 echo "Backend is ready"
 
 cd /home/ec2-user/dev/CourseProject/front
-echo "Preparing frontend to start"
-echo "Install app dependencies"
-yarn install
+#echo "Preparing frontend to start"
+#echo "Install app dependencies"
+#yarn install
 
 echo "Run new PM2 action"
 pm2 start --name course-front npm -- start
