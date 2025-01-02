@@ -18,10 +18,8 @@ async function ensureUserExists(targetUserId) {
   }
 }
 
-// from express library documentation:
 const router = express.Router();
 
-// [GET] /users/ (table with users)
 router.get(
   '/',
   asyncUtil(async function (req, res) {
@@ -30,7 +28,6 @@ router.get(
   })
 )
 
-// [DELETE] /users/{id}
 router.delete(
   '/:id',
   [
@@ -46,7 +43,6 @@ router.delete(
   })
 )
 
-// [POST] /users/{id}/block (block user with id)
 router.post(
   '/:id/block',
   [
@@ -62,7 +58,6 @@ router.post(
   })
 )
 
-// [POST] /users/{id}/unblock (unblock user with id)
 router.post(
   '/:id/unblock',
   [
@@ -78,7 +73,6 @@ router.post(
   })
 )
 
-// [POST] /users/{id}/grant (grant admin access for user with {id})
 router.post(
   '/:id/grant',
   [
@@ -94,7 +88,6 @@ router.post(
   })
 )
 
-// [POST] /users/{id}/revoke (revoke admin access for user with {id})
 router.post(
   '/:id/revoke',
   [

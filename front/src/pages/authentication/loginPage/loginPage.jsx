@@ -39,7 +39,7 @@ export default function LoginPage() {
       email: email,
       password: password
     }
-   
+
     try {
       const user = await loginRequest(request);
       const encrypted = btoa(request.email + ':' + request.password);
@@ -48,7 +48,7 @@ export default function LoginPage() {
       setUser(user)
       navigate('/templates')
     } catch (error) {
-      setAuthError( 'Invalid login or password');
+      setAuthError('Invalid login or password');
       console.log(error)
     }
   }

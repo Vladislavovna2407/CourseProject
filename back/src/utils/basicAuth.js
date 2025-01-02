@@ -35,7 +35,7 @@ export async function basicAuth(req, res, next) {
   next();
 }
 
-export async function optionalBasicAuth(req, res, next){
+export async function optionalBasicAuth(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return next();

@@ -6,7 +6,7 @@ import { UserContext } from '../../../context/userContext';
 
 export default function TemplatesTablePage() {
   let [templates, setTemplates] = useState([]);
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   async function refreshTemplatesTable() {
     try {
@@ -53,43 +53,43 @@ export default function TemplatesTablePage() {
     )
   }
 
-function renderForUnauthorizedUser(templates) {
-  
-  return(
-    <Fragment>
-        <div className="container position">
-        <table className="table table-secondary table-hover table-striped ">
-          <caption className="caption">List of templates</caption>
-          <thead className='thead-light' >
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Name of template</th>
-              <th scope="col">Replies</th>
-              <th scope="col">The author</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {templates.map((template) => (
-              <tr key={template.templateId}>
-                <th scope="row"></th>
-                <td>{template.title}</td>
-                <td>{template.answerCount}</td>
-                <td>{template.authorName}</td>
-                <td> <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i className="bi bi-eye"></i></a></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Fragment>
-  )
-   
-}
+  function renderForUnauthorizedUser(templates) {
 
-function renderForAuthorizedUser(templates) {
-  return(
-  <div className="container position">
+    return (
+      <Fragment>
+        <div className="container position">
+          <table className="table table-secondary table-hover table-striped ">
+            <caption className="caption">List of templates</caption>
+            <thead className='thead-light' >
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name of template</th>
+                <th scope="col">Replies</th>
+                <th scope="col">The author</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {templates.map((template) => (
+                <tr key={template.templateId}>
+                  <th scope="row"></th>
+                  <td>{template.title}</td>
+                  <td>{template.answerCount}</td>
+                  <td>{template.authorName}</td>
+                  <td> <a className='links btn btn-outline-primary mx-1 color-blue' href={`/templates/${template.templateId}/view`}><i className="bi bi-eye"></i></a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Fragment>
+    )
+
+  }
+
+  function renderForAuthorizedUser(templates) {
+    return (
+      <div className="container position">
         <table className="table table-secondary table-hover table-striped ">
           <caption className="caption">List of templates</caption>
           <thead className='thead-light' >
@@ -117,14 +117,14 @@ function renderForAuthorizedUser(templates) {
           </tbody>
         </table>
       </div>
-  )
-}
+    )
+  }
 
 
   return (
     <Fragment>
       <Header />
-      {user ? renderForAuthorizedUser(templates)  :renderForUnauthorizedUser(templates) }
+      {user ? renderForAuthorizedUser(templates) : renderForUnauthorizedUser(templates)}
     </Fragment>
   )
 }

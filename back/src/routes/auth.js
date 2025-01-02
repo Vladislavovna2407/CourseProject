@@ -13,19 +13,16 @@ function ensureRequestIsValid(req) {
 
 const router = express.Router();
 
-// Create new user
 router.post(
-  '/register', // URL
+  '/register',
   [
     body('email').notEmpty().isEmail(),
     body('name').notEmpty(),
     body('password').notEmpty()
-  ], // input validation
+  ],
   asyncUtil(async function (req, res) {
     ensureRequestIsValid(req);
-
     const user = await UserService.createUser(matchedData(req))
-
     return res.status(200).json(user);
   })
 )

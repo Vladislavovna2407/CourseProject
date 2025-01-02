@@ -36,7 +36,6 @@ class UserService {
     return response[0]
   });
 
-
   static getAllUsers = async () => this.executeSql(async () => {
     const response = await sql`
     SELECT app_user_id as "id", email, name, is_active as "isActive", is_admin as "isAdmin"

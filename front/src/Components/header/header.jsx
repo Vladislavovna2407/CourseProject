@@ -41,7 +41,7 @@ export default function Header() {
     buttons.push(
       {
         text: 'Log in',
-        onClick: () => navigate("/login") 
+        onClick: () => navigate("/login")
       },
     )
   }
